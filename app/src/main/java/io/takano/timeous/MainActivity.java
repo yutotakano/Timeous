@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddTimerActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UpsertTimerActivity.class);
+                intent.putExtra("mode", 1);
                 startActivity(intent);
             }
         });
