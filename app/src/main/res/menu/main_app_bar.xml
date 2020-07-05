@@ -6,5 +6,6 @@
         android:title="@string/main_app_bar_settings_name"
         android:contentDescription="@string/main_app_bar_settings_desc"
         android:icon="@drawable/ic_baseline_settings_24"
+        app:iconTint="@color/colorPrimary"
         app:showAsAction="ifRoom" />
 </menu>
