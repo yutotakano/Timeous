@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Timeous</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="main_app_bar_settings_name">Settings</string>
+    <string name="main_app_bar_settings_desc">Modify Settings</string>
+</resources>
