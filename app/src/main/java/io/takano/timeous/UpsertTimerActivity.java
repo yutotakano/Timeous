@@ -12,9 +12,9 @@ public class UpsertTimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_timer);
         Integer mode = (Integer) getIntent().getSerializableExtra("mode");
         if (mode != null && mode == 1) {
-            setTitle("Modify Timer");
-        } else {
             setTitle("Add a Timer");
+        } else {
+            setTitle("Modify a Timer");
         }
     }
 }
