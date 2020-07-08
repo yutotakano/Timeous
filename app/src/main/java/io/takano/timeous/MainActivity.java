@@ -3,6 +3,8 @@ package io.takano.timeous;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.timerGroups.TimerGroup;
 import io.takano.timeous.timers.Timer;
 
@@ -23,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+
+        final TimerGroupAdapter adapter = new TimerGroupAdapter();
+        recyclerView.setAdapter(adapter);
+
         // we want to initialise the viewmodel, but if we do new ViewModel() here then it will get
         // created everytime for each activity
         // instead we use Android's built-in provider, which takes as argument a fragment scope to
@@ -33,16 +42,16 @@ public class MainActivity extends AppCompatActivity {
         timerViewModel.getAllTimerGroups().observe(this, new Observer<List<TimerGroup>>() {
             @Override
             public void onChanged(List<TimerGroup> timerGroups) {
-                Log.d("test", timerGroups.toString());
+                adapter.setTimerGroups(timerGroups);
             }
         });
 
-        timerViewModel.getAllTimers().observe(this, new Observer<List<Timer>>() {
-            @Override
-            public void onChanged(List<Timer> timers) {
-                Log.d("abc", timers.toString());
-            }
-        });
+//        timerViewModel.getAllTimers().observe(this, new Observer<List<Timer>>() {
+//            @Override
+//            public void onChanged(List<Timer> timers) {
+//                Log.d("abc", timers.toString());
+//            }
+//        });
 
         FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.mainAppBarAdd);
         addButton.setOnClickListener(new View.OnClickListener() {

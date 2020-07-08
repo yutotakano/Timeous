@@ -13,6 +13,10 @@ import io.takano.timeous.timers.Timer;
 import io.takano.timeous.timers.TimerDao;
 import io.takano.timeous.timers.TimerDatabase;
 
+/**
+ * The role of this class is to provide a layer of abstraction for the database operations.
+ * AsyncTasks are defined in this class.
+ */
 public class TimerRepository {
 
     private TimerDao timerDao;

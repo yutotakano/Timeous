@@ -8,11 +8,12 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/mainRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="100dp">
+        android:paddingBottom="100dp"
+        tools:listitem="@layout/item_timer_group">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -30,7 +31,7 @@
         android:id="@+id/mainAppBarAdd"
         app:layout_anchor="@id/mainAppBar"
         app:srcCompat="@drawable/ic_baseline_add_24"
-        app:tint="@color/colorPureWhite"
-        app:backgroundTint="@color/colorPrimary"/>
+        app:tint="@color/color_pure_white"
+        app:backgroundTint="@color/color_primary"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
