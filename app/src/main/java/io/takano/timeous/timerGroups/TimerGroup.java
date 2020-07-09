@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+@SuppressWarnings("CanBeFinal")
 @Entity(tableName = "timer_groups", indices = {@Index(value = "id", unique = true)})
 public class TimerGroup {
 

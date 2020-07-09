@@ -31,7 +31,7 @@ public abstract class TimerDatabase extends RoomDatabase {
         return instance;
     }
 
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         // control + o
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -41,7 +41,7 @@ public abstract class TimerDatabase extends RoomDatabase {
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-        private TimerDao timerDao;
+        private final TimerDao timerDao;
 
         private PopulateDbAsyncTask(TimerDatabase db) {
             // this is possible because onCreate is called after database is created with Dao

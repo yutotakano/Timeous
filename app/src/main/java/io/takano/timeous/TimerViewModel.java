@@ -15,7 +15,7 @@ import io.takano.timeous.timers.Timer;
 // so, we use AndroidViewModel (not ViewModel) to get the unchanging Application context
 public class TimerViewModel extends AndroidViewModel {
 
-    private TimerRepository timerRepository;
+    private final TimerRepository timerRepository;
     private LiveData<List<TimerGroup>> allTimerGroups;
     private LiveData<List<Timer>> allTimers;
 

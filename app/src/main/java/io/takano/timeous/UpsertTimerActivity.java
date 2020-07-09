@@ -41,7 +41,7 @@ public class UpsertTimerActivity extends AppCompatActivity {
         } else {
             setTitle("Modify timer");
             // use a temporary variable since I somehow can't set the value of a LiveData
-            MutableLiveData<Long> temporary = new MutableLiveData<Long>();
+            MutableLiveData<Long> temporary = new MutableLiveData<>();
             temporary.setValue(id);
             timerGroupId = temporary;
         }

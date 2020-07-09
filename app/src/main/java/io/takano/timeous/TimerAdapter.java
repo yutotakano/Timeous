@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,8 +50,9 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerHolder>
         notifyDataSetChanged();
     }
 
-    class TimerHolder extends RecyclerView.ViewHolder {
-        private TextView textViewName, textViewSeconds;
+    static class TimerHolder extends RecyclerView.ViewHolder {
+        private final TextView textViewName;
+        private final TextView textViewSeconds;
 
         public TimerHolder(@NonNull View itemView) {
             super(itemView);

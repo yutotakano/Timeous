@@ -40,8 +40,8 @@ public class TimerGroupAdapter extends RecyclerView.Adapter<TimerGroupAdapter.Ti
         notifyDataSetChanged();
     }
 
-    class TimerGroupHolder extends RecyclerView.ViewHolder {
-        private TextView textViewName;
+    static class TimerGroupHolder extends RecyclerView.ViewHolder {
+        private final TextView textViewName;
 
         public TimerGroupHolder(@NonNull View itemView) {
             super(itemView);

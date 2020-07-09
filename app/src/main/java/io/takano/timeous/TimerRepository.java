@@ -19,10 +19,11 @@ import io.takano.timeous.timers.TimerDatabase;
  * The role of this class is to provide a layer of abstraction for the database operations.
  * AsyncTasks are defined in this class.
  */
+@SuppressWarnings("CanBeFinal")
 public class TimerRepository {
 
-    private TimerDao timerDao;
-    private TimerGroupDao timerGroupDao;
+    private final TimerDao timerDao;
+    private final TimerGroupDao timerGroupDao;
     private LiveData<List<Timer>> allTimers;
     private LiveData<List<TimerGroup>> allTimerGroups;
     private MutableLiveData<Long> insertTimerGroupId = new MutableLiveData<>();
@@ -83,9 +84,9 @@ public class TimerRepository {
     // static because it shouldn't have reference to the Repository
     // if not, memory leak could occur
     private static class InsertTimerGroupAsyncTask extends AsyncTask<TimerGroup, Void, Long> {
-        private WeakReference<TimerRepository> timerRepositoryWeakReference;
+        private final WeakReference<TimerRepository> timerRepositoryWeakReference;
 
-        private TimerGroupDao timerGroupDao;
+        private final TimerGroupDao timerGroupDao;
 
         private InsertTimerGroupAsyncTask(TimerGroupDao timerGroupDao, TimerRepository repo) {
             this.timerRepositoryWeakReference = new WeakReference<>(repo);
@@ -106,7 +107,7 @@ public class TimerRepository {
     }
 
     private static class UpdateTimerGroupAsyncTask extends AsyncTask<TimerGroup, Void, Void> {
-        private TimerGroupDao timerGroupDao;
+        private final TimerGroupDao timerGroupDao;
 
         private UpdateTimerGroupAsyncTask(TimerGroupDao timerGroupDao) {
             this.timerGroupDao = timerGroupDao;
@@ -120,7 +121,7 @@ public class TimerRepository {
     }
 
     private static class DeleteTimerGroupAsyncTask extends AsyncTask<TimerGroup, Void, Void> {
-        private TimerGroupDao timerGroupDao;
+        private final TimerGroupDao timerGroupDao;
 
         private DeleteTimerGroupAsyncTask(TimerGroupDao timerGroupDao) {
             this.timerGroupDao = timerGroupDao;
@@ -134,7 +135,7 @@ public class TimerRepository {
     }
 
     private static class DeleteTimersInGroupAsyncTask extends AsyncTask<Long, Void, Void> {
-        private TimerDao timerDao;
+        private final TimerDao timerDao;
 
         private DeleteTimersInGroupAsyncTask(TimerDao timerDao) {
             this.timerDao = timerDao;
@@ -148,7 +149,7 @@ public class TimerRepository {
     }
 
     private static class InsertTimerAsyncTask extends AsyncTask<Timer, Void, Void> {
-        private TimerDao timerDao;
+        private final TimerDao timerDao;
 
         private InsertTimerAsyncTask(TimerDao timerDao) {
             this.timerDao = timerDao;
@@ -162,7 +163,7 @@ public class TimerRepository {
     }
 
     private static class UpdateTimerAsyncTask extends AsyncTask<Timer, Void, Void> {
-        private TimerDao timerDao;
+        private final TimerDao timerDao;
 
         private UpdateTimerAsyncTask(TimerDao timerDao) {
             this.timerDao = timerDao;
@@ -176,7 +177,7 @@ public class TimerRepository {
     }
 
     private static class DeleteTimerAsyncTask extends AsyncTask<Timer, Void, Void> {
-        private TimerDao timerDao;
+        private final TimerDao timerDao;
 
         private DeleteTimerAsyncTask(TimerDao timerDao) {
             this.timerDao = timerDao;
