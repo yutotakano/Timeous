@@ -3,9 +3,11 @@ package io.takano.timeous;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import io.takano.timeous.timerGroups.TimerGroup;
 import io.takano.timeous.timerGroups.TimerGroupDao;
 import io.takano.timeous.timerGroups.TimerGroupDatabase;
@@ -23,6 +25,7 @@ public class TimerRepository {
     private TimerGroupDao timerGroupDao;
     private LiveData<List<Timer>> allTimers;
     private LiveData<List<TimerGroup>> allTimerGroups;
+    private MutableLiveData<Long> insertTimerGroupId = new MutableLiveData<>();
 
     public TimerRepository(Application application) {
         TimerGroupDatabase timerGroupDatabase = TimerGroupDatabase.getDatabase(application);
@@ -34,8 +37,11 @@ public class TimerRepository {
         allTimers = timerDao.getAllTimers();
     }
 
-    public void insertTimerGroup(TimerGroup timerGroup) {
-        new InsertTimerGroupAsyncTask(timerGroupDao).execute(timerGroup);
+    public LiveData<Long> insertTimerGroup(TimerGroup timerGroup) {
+        // return null and asynchronously set livedata to the id
+        insertTimerGroupId.setValue(null);
+        new InsertTimerGroupAsyncTask(timerGroupDao, this).execute(timerGroup);
+        return insertTimerGroupId;
     }
 
     public void updateTimerGroup(TimerGroup timerGroup) {
@@ -50,12 +56,12 @@ public class TimerRepository {
         return allTimerGroups;
     }
 
-    public LiveData<List<Timer>> getTimersInGroup(TimerGroup timerGroup) {
-        return timerDao.getTimersInGroup(timerGroup.getId());
+    public LiveData<List<Timer>> getTimersInGroup(Long timerGroupId) {
+        return timerDao.getTimersInGroup(timerGroupId);
     }
 
-    public void deleteTimersInGroup(TimerGroup timerGroup) {
-        new DeleteTimersInGroupAsyncTask(timerDao).execute(timerGroup);
+    public void deleteTimersInGroup(Long timerGroupId) {
+        new DeleteTimersInGroupAsyncTask(timerDao).execute(timerGroupId);
     }
 
     public void insertTimer(Timer timer) {
@@ -76,17 +82,26 @@ public class TimerRepository {
 
     // static because it shouldn't have reference to the Repository
     // if not, memory leak could occur
-    private static class InsertTimerGroupAsyncTask extends AsyncTask<TimerGroup, Void, Void> {
+    private static class InsertTimerGroupAsyncTask extends AsyncTask<TimerGroup, Void, Long> {
+        private WeakReference<TimerRepository> timerRepositoryWeakReference;
+
         private TimerGroupDao timerGroupDao;
 
-        private InsertTimerGroupAsyncTask(TimerGroupDao timerGroupDao) {
+        private InsertTimerGroupAsyncTask(TimerGroupDao timerGroupDao, TimerRepository repo) {
+            this.timerRepositoryWeakReference = new WeakReference<>(repo);
             this.timerGroupDao = timerGroupDao;
         }
 
         @Override
-        protected Void doInBackground(TimerGroup... timerGroups) {
-            timerGroupDao.insert(timerGroups[0]);
-            return null;
+        protected Long doInBackground(TimerGroup... timerGroups) {
+            return timerGroupDao.insert(timerGroups[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Long id) {
+            TimerRepository repo = timerRepositoryWeakReference.get();
+            if (repo == null) return;
+            repo.insertTimerGroupId.setValue(id);
         }
     }
 
@@ -114,6 +129,20 @@ public class TimerRepository {
         @Override
         protected Void doInBackground(TimerGroup... timerGroups) {
             timerGroupDao.delete(timerGroups[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteTimersInGroupAsyncTask extends AsyncTask<Long, Void, Void> {
+        private TimerDao timerDao;
+
+        private DeleteTimersInGroupAsyncTask(TimerDao timerDao) {
+            this.timerDao = timerDao;
+        }
+
+        @Override
+        protected Void doInBackground(Long... timerGroupIds) {
+            timerDao.deleteTimersInGroup(timerGroupIds[0]);
             return null;
         }
     }
@@ -156,20 +185,6 @@ public class TimerRepository {
         @Override
         protected Void doInBackground(Timer... timers) {
             timerDao.delete(timers[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteTimersInGroupAsyncTask extends AsyncTask<TimerGroup, Void, Void> {
-        private TimerDao timerDao;
-
-        private DeleteTimersInGroupAsyncTask(TimerDao timerDao) {
-            this.timerDao = timerDao;
-        }
-
-        @Override
-        protected Void doInBackground(TimerGroup... timerGroups) {
-            timerDao.deleteTimersInGroup(timerGroups[0].getId());
             return null;
         }
     }

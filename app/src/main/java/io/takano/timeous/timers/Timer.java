@@ -11,7 +11,7 @@ public class Timer {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
-    protected  Integer id;
+    protected Integer id;
 
     @ColumnInfo(name = "group_id")
     private Integer groupId;

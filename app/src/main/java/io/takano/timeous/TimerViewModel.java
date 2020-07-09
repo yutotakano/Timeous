@@ -27,8 +27,8 @@ public class TimerViewModel extends AndroidViewModel {
     }
 
     // UI controller doesn't get access to repository, instead a wrapper API
-    public void insertTimerGroup(TimerGroup timerGroup) {
-        timerRepository.insertTimerGroup(timerGroup);
+    public LiveData<Long> insertTimerGroup(TimerGroup timerGroup) {
+        return timerRepository.insertTimerGroup(timerGroup);
     }
 
     public void updateTimerGroup(TimerGroup timerGroup) {
@@ -43,12 +43,12 @@ public class TimerViewModel extends AndroidViewModel {
         return allTimerGroups;
     }
 
-    public LiveData<List<Timer>> getTimersInGroup(TimerGroup timerGroup) {
-        return timerRepository.getTimersInGroup(timerGroup);
+    public LiveData<List<Timer>> getTimersInGroup(Long timerGroupId) {
+        return timerRepository.getTimersInGroup(timerGroupId);
     }
 
-    public void deleteTimersInGroup(TimerGroup timerGroup) {
-        timerRepository.deleteTimersInGroup(timerGroup);
+    public void deleteTimersInGroup(Long timerGroupId) {
+        timerRepository.deleteTimersInGroup(timerGroupId);
     }
 
     public void insertTimer(Timer timer) {

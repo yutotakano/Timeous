@@ -14,7 +14,7 @@ import io.takano.timeous.timers.Timer;
 public interface TimerGroupDao {
 
     @Insert
-    void insert(TimerGroup timerGroup);
+    long insert(TimerGroup timerGroup);
 
     @Update
     void update(TimerGroup timerGroup);

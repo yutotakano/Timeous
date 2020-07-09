@@ -5,5 +5,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="main_app_bar_settings_name">Settings</string>
     <string name="main_app_bar_settings_desc">Modify Settings</string>
-    <string name="upsert_timer_group_name_hint">Name</string>
+    <string name="upsert_timer_group_name_hint">Name of Timer</string>
+    <string name="upsert_timer_routines_label">Routines</string>
 </resources>

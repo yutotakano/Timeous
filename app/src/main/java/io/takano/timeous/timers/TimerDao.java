@@ -22,10 +22,10 @@ public interface TimerDao {
     void delete(Timer timer);
 
     @Query("DELETE FROM timers WHERE group_id=:groupId")
-    void deleteTimersInGroup(Integer groupId);
+    void deleteTimersInGroup(Long groupId);
 
     @Query("SELECT * FROM timers WHERE group_id=:groupId")
-    LiveData<List<Timer>> getTimersInGroup(Integer groupId);
+    LiveData<List<Timer>> getTimersInGroup(Long groupId);
 
     @Query("SELECT * FROM timers")
     LiveData<List<Timer>> getAllTimers();
