@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Updated routine timer", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "Timer was not added.", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Timer was not added.", Toast.LENGTH_SHORT).show();
         }
     }
 }
