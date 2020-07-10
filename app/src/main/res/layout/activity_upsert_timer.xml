@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpsertTimerActivity">
+    tools:context=".UpsertTimerActivity"
+    android:padding="8dp">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputGroupName"
+        android:id="@+id/textInputLayoutName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,8 +18,10 @@
         app:boxBackgroundColor="@color/color_pure_white"
         android:hint="@string/upsert_timer_group_name_hint">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -30,7 +33,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputGroupName"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutName"
         app:layout_constraintBottom_toTopOf="@id/timersRecyclerView"/>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -11,10 +11,10 @@ public class Timer {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
-    protected Integer id;
+    protected Long id;
 
     @ColumnInfo(name = "group_id")
-    private Integer groupId;
+    private Long groupId;
 
     private Integer order;
 
@@ -23,19 +23,23 @@ public class Timer {
     @NonNull
     private Integer seconds;
 
-    public Timer(Integer groupId, Integer order, String name, Integer seconds) {
+    public Timer(Long groupId, Integer order, String name, Integer seconds) {
         this.groupId = groupId;
         this.order = order;
         this.name = name;
         this.seconds = seconds;
     }
 
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
     @NonNull
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public Integer getGroupId() {
+    public Long getGroupId() {
         return groupId;
     }
 

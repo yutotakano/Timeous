@@ -50,9 +50,9 @@ public abstract class TimerDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            timerDao.insert(new Timer(1, 1, "test", 450));
-            timerDao.insert(new Timer(1, 2, "test a", 150));
-            timerDao.insert(new Timer(1, 3, "test b", 60));
+            timerDao.insert(new Timer(1L, 1, "test", 450));
+            timerDao.insert(new Timer(1L, 2, "test a", 150));
+            timerDao.insert(new Timer(1L, 3, "test b", 60));
             return null;
         }
     }

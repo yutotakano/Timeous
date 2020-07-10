@@ -51,8 +51,8 @@ public class TimerViewModel extends AndroidViewModel {
         timerRepository.deleteTimersInGroup(timerGroupId);
     }
 
-    public void insertTimer(Timer timer) {
-        timerRepository.insertTimer(timer);
+    public void insertTimer(Timer timer, Long timerGroupId) {
+        timerRepository.insertTimer(timer, timerGroupId);
     }
 
     public void updateTimer(Timer timer) {

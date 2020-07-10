@@ -65,7 +65,8 @@ public class TimerRepository {
         new DeleteTimersInGroupAsyncTask(timerDao).execute(timerGroupId);
     }
 
-    public void insertTimer(Timer timer) {
+    public void insertTimer(Timer timer, Long timerGroupId) {
+        timer.setGroupId(timerGroupId);
         new InsertTimerAsyncTask(timerDao).execute(timer);
     }
 
