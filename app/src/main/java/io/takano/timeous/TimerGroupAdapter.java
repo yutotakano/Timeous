@@ -15,6 +15,7 @@ import io.takano.timeous.timerGroups.TimerGroup;
 public class TimerGroupAdapter extends RecyclerView.Adapter<TimerGroupAdapter.TimerGroupHolder> {
     // Using ArrayList instead of List makes it non-null, cutting needs to check for null
     private List<TimerGroup> timerGroups = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -40,12 +41,32 @@ public class TimerGroupAdapter extends RecyclerView.Adapter<TimerGroupAdapter.Ti
         notifyDataSetChanged();
     }
 
-    static class TimerGroupHolder extends RecyclerView.ViewHolder {
+    class TimerGroupHolder extends RecyclerView.ViewHolder {
         private final TextView textViewName;
 
         public TimerGroupHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewName);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    // make sure we don't click something that doesn't exist, like during a
+                    // deletion animation
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(timerGroups.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(TimerGroup timerGroup);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

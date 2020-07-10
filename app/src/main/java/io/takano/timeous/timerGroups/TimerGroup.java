@@ -1,5 +1,7 @@
 package io.takano.timeous.timerGroups;
 
+import java.io.Serializable;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -7,11 +9,11 @@ import androidx.room.PrimaryKey;
 
 @SuppressWarnings("CanBeFinal")
 @Entity(tableName = "timer_groups", indices = {@Index(value = "id", unique = true)})
-public class TimerGroup {
+public class TimerGroup implements Serializable {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
-    protected  Integer id;
+    protected  Long id;
 
     private String name;
 
@@ -19,8 +21,12 @@ public class TimerGroup {
         this.name = name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @NonNull
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

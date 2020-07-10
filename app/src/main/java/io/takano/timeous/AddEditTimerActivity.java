@@ -2,10 +2,6 @@ package io.takano.timeous;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.timerGroups.TimerGroup;
@@ -13,6 +9,7 @@ import io.takano.timeous.timers.Timer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,9 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpsertTimerActivity extends AppCompatActivity {
-    public static final String EXTRA_MODE = "io.takano.timeous.EXTRA_MODE";
-    public static final String EXTRA_NAME = "io.takano.timeous.EXTRA_NAME";
+public class AddEditTimerActivity extends AppCompatActivity {
     public static final String EXTRA_TIMER_GROUP = "io.takano.timeous.EXTRA_TIMER_GROUP";
     public static final String EXTRA_TIMERS = "io.takano.timeous.EXTRA_TIMERS";
 
@@ -35,22 +30,21 @@ public class UpsertTimerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upsert_timer);
+        setContentView(R.layout.activity_add_edit_timer);
 
         editTextName = findViewById(R.id.textInputName);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
 
-        // Get the upsert mode (add or modify?) and set the internal timerGroupId;
-        Integer mode = (Integer) getIntent().getIntExtra(EXTRA_MODE, 1);
-        TimerGroup timerGroup = (TimerGroup) getIntent().getSerializableExtra(EXTRA_TIMER_GROUP);
         List<Timer> timers = (List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS);
-        if (mode != null && mode == 1) {
+
+        if (getIntent().hasExtra(EXTRA_TIMER_GROUP)) {
+            setTitle("Modify timer");
+            editingTimer = (TimerGroup) getIntent().getSerializableExtra(EXTRA_TIMER_GROUP);
+            editTextName.setText(editingTimer.getName());
+        } else {
             setTitle("Add new timer");
             editingTimer = new TimerGroup(null);
-        } else {
-            setTitle("Modify timer");
-            editingTimer = timerGroup;
         }
 
         // Initialise the RecyclerView for timers
@@ -68,9 +62,10 @@ public class UpsertTimerActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT).show();
             return;
         }
+        editingTimer.setName(name);
 
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_NAME, name);
+        intent.putExtra(EXTRA_TIMER_GROUP, editingTimer);
         intent.putExtra(EXTRA_TIMERS, new ArrayList<Timer>());
 
         setResult(RESULT_OK, intent);

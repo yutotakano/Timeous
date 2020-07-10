@@ -34,6 +34,18 @@ public class Timer {
         this.groupId = groupId;
     }
 
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSeconds(@NonNull Integer seconds) {
+        this.seconds = seconds;
+    }
+
     @NonNull
     public Long getId() {
         return id;
