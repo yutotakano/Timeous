@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // we want to initialise the viewmodel, but if we do new ViewModel() here then it will get
-        // created everytime for each activity
+        // we want to initialise the ViewModel, but if we do new ViewModel() here then it will get
+        // created every time for each activity
         // instead we use Android's built-in provider, which takes as argument a fragment scope to
         // bind its lifecycle to if it has to create a new one
         timerViewModel = new ViewModelProvider(this,

@@ -4,6 +4,6 @@
     <item
         android:id="@+id/saveTimer"
         android:icon="@drawable/ic_baseline_check_24"
-        android:title="Save"
+        android:title="@string/add_edit_app_bar_menu_save"
         app:showAsAction="ifRoom" />
 </menu>

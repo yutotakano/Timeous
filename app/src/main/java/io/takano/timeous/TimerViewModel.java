@@ -16,8 +16,8 @@ import io.takano.timeous.timers.Timer;
 public class TimerViewModel extends AndroidViewModel {
 
     private final TimerRepository timerRepository;
-    private LiveData<List<TimerGroup>> allTimerGroups;
-    private LiveData<List<Timer>> allTimers;
+    private final LiveData<List<TimerGroup>> allTimerGroups;
+    private final LiveData<List<Timer>> allTimers;
 
     public TimerViewModel(@NonNull Application application) {
         super(application);

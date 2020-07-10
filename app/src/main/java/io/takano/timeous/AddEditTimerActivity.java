@@ -9,7 +9,6 @@ import io.takano.timeous.timers.Timer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,7 +74,7 @@ public class AddEditTimerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.upsert_timer_menu, menu);
+        menuInflater.inflate(R.menu.add_edit_timer_menu, menu);
         return true;
     }
 
