@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
             final LiveData<Long> routineResultId = dataViewModel.insertRoutine(routine);
 
-            Toast.makeText(this, "routine saved", Toast.LENGTH_SHORT).show();
             // insert child timers when timer group is successfully done
             routineResultId.observe(this, new Observer<Long>() {
                 @Override
@@ -105,9 +104,14 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < timers.size(); i++) {
                 Timer timer = timers.get(i);
-                dataViewModel.insertTimer(timer, routine.getId());
+                dataViewModel.updateTimer(timer);
                 Toast.makeText(this, "Updated timer" + String.valueOf(i), Toast.LENGTH_SHORT).show();
             }
+        } else if (requestCode == EDIT_ROUTINE_REQUEST && resultCode == AddEditRoutineActivity.RESULT_DELETE) {
+            Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+            dataViewModel.deleteRoutine(routine);
+            dataViewModel.deleteTimersInRoutine(routine.getId());
+            Toast.makeText(this, "Routine and its timers deleted permanently", Toast.LENGTH_SHORT).show();
         } else {
 //            Toast.makeText(this, "Timer was not added.", Toast.LENGTH_SHORT).show();
         }
