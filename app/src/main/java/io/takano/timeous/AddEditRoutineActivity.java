@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -44,6 +45,9 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         } else {
             setTitle("Create new routine");
             editingTimer = new Routine(null);
+            if(editTextName.requestFocus()) {
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
         }
 
         // Initialise the RecyclerView for timers
