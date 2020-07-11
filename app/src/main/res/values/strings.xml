@@ -6,6 +6,7 @@
     <string name="add_edit_routine_timers_label">Timers</string>
     <string name="add_edit_routine_timers_list_icon_desc">Icon of a timer</string>
     <string name="add_edit_routine_timers_list_handle_desc">Use this handle to reorder the timers</string>
-    <string name="no_one_will_see_this">Temporary Text</string>
-    <string name="add_edit_app_bar_menu_save">Save</string>
+    <string name="add_edit_routine_app_bar_menu_save">Save</string>
+    <string name="add_edit_routine_delete_button_text">Delete Routine</string>
+    <string name="no_one_will_see_this">No one will see this text</string>
 </resources>

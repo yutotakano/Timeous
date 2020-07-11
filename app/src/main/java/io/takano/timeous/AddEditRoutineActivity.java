@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
 public class AddEditRoutineActivity extends AppCompatActivity {
     public static final String EXTRA_ROUTINE = "io.takano.timeous.EXTRA_ROUTINE";
     public static final String EXTRA_TIMERS = "io.takano.timeous.EXTRA_TIMERS";
+    public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 
     private TextInputEditText editTextName;
     private Routine editingTimer;
@@ -40,10 +43,13 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
         }
 
+        MaterialButton deleteButton = findViewById(R.id.deleteButton);
+
         List<Timer> timers = (List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS);
 
         if (getIntent().hasExtra(EXTRA_ROUTINE)) {
             setTitle("Edit Routine");
+            deleteButton.setVisibility(View.VISIBLE);
             editingTimer = (Routine) getIntent().getSerializableExtra(EXTRA_ROUTINE);
             if (editingTimer == null) {
                 setResult(RESULT_CANCELED);
@@ -52,6 +58,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             editTextName.setText(editingTimer.getName());
         } else {
             setTitle("Create new routine");
+            deleteButton.setVisibility(View.INVISIBLE);
             editingTimer = new Routine(null);
             if(editTextName.requestFocus()) {
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -65,6 +72,20 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
         final TimerListAdapter timerListAdapter = new TimerListAdapter();
         recyclerView.setAdapter(timerListAdapter);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteTimer();
+            }
+        });
+    }
+
+    private void deleteTimer() {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_ROUTINE, editingTimer);
+        setResult(RESULT_DELETE, intent);
+        finish();
     }
 
     private void saveTimer() {
