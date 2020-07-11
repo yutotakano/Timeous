@@ -13,8 +13,8 @@ public class Timer {
     @PrimaryKey(autoGenerate = true)
     protected Long id;
 
-    @ColumnInfo(name = "group_id")
-    private Long groupId;
+    @ColumnInfo(name = "routine_id")
+    private Long routineId;
 
     private Integer order;
 
@@ -23,15 +23,15 @@ public class Timer {
     @NonNull
     private Integer seconds;
 
-    public Timer(Long groupId, Integer order, String name, Integer seconds) {
-        this.groupId = groupId;
+    public Timer(Long routineId, Integer order, String name, Integer seconds) {
+        this.routineId = routineId;
         this.order = order;
         this.name = name;
         this.seconds = seconds;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setRoutineId(Long routineId) {
+        this.routineId = routineId;
     }
 
     public void setOrder(Integer order) {
@@ -51,8 +51,8 @@ public class Timer {
         return id;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public Long getRoutineId() {
+        return routineId;
     }
 
     public Integer getOrder() {

@@ -21,11 +21,11 @@ public interface TimerDao {
     @Delete
     void delete(Timer timer);
 
-    @Query("DELETE FROM timers WHERE group_id=:groupId")
-    void deleteTimersInGroup(Long groupId);
+    @Query("DELETE FROM timers WHERE routine_id=:routineId")
+    void deleteTimersInRoutine(Long routineId);
 
-    @Query("SELECT * FROM timers WHERE group_id=:groupId")
-    LiveData<List<Timer>> getTimersInGroup(Long groupId);
+    @Query("SELECT * FROM timers WHERE routine_id=:routineId")
+    LiveData<List<Timer>> getTimersInRoutine(Long routineId);
 
     @Query("SELECT * FROM timers")
     LiveData<List<Timer>> getAllTimers();

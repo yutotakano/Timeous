@@ -1,4 +1,4 @@
-package io.takano.timeous.timerGroups;
+package io.takano.timeous.routines;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,17 +9,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {TimerGroup.class}, version = 1)
-public abstract class TimerGroupDatabase extends RoomDatabase {
+@Database(entities = {Routine.class}, version = 1)
+public abstract class RoutineDatabase extends RoomDatabase {
 
-    private static TimerGroupDatabase instance;
+    private static RoutineDatabase instance;
 
-    public abstract TimerGroupDao timerGroupDao();
+    public abstract RoutineDao timerGroupDao();
 
-    public static synchronized TimerGroupDatabase getDatabase(final Context context) {
+    public static synchronized RoutineDatabase getDatabase(final Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    TimerGroupDatabase.class, "timer_group_database")
+                    RoutineDatabase.class, "routines_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
                     .build();
@@ -36,15 +36,15 @@ public abstract class TimerGroupDatabase extends RoomDatabase {
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-        private final TimerGroupDao timerGroupDao;
+        private final RoutineDao routineDao;
 
-        private PopulateDbAsyncTask(TimerGroupDatabase db) {
-            this.timerGroupDao = db.timerGroupDao();
+        private PopulateDbAsyncTask(RoutineDatabase db) {
+            this.routineDao = db.timerGroupDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            timerGroupDao.insert(new TimerGroup("Group 1"));
+            routineDao.insert(new Routine("Routine 1"));
             return null;
         }
     }

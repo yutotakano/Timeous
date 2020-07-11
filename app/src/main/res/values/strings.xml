@@ -2,10 +2,10 @@
     <string name="app_name">Timeous</string>
     <string name="main_app_bar_settings_name">Settings</string>
     <string name="main_app_bar_settings_desc">Modify Settings</string>
-    <string name="add_edit_timer_group_name_hint">Name of Timer</string>
-    <string name="add_edit_timer_routines_label">Routines</string>
-    <string name="add_edit_timer_routines_list_icon_desc">Icon of a timer</string>
-    <string name="add_edit_timer_routines_list_handle_desc">Use this handle to reorder the routines</string>
+    <string name="add_edit_routine_name_hint">Name of Routine</string>
+    <string name="add_edit_routine_timers_label">Timers</string>
+    <string name="add_edit_routine_timers_list_icon_desc">Icon of a timer</string>
+    <string name="add_edit_routine_timers_list_handle_desc">Use this handle to reorder the timers</string>
     <string name="no_one_will_see_this">Temporary Text</string>
     <string name="add_edit_app_bar_menu_save">Save</string>
 </resources>

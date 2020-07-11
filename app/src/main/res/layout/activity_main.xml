@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="100dp"
-        tools:listitem="@layout/item_timer_group">
+        tools:listitem="@layout/item_routine">
 
     </androidx.recyclerview.widget.RecyclerView>
 

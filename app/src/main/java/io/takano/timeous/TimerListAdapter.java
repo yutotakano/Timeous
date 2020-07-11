@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.timers.Timer;
 
-public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerHolder> {
+public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.TimerHolder> {
     private List<Timer> timers = new ArrayList<>();
 
     @NonNull

@@ -7,12 +7,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.takano.timeous.timerGroups.TimerGroup;
+import io.takano.timeous.routines.Routine;
 import io.takano.timeous.timers.Timer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,10 +21,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int ADD_TIMER_REQUEST = 1;
-    public static final int EDIT_TIMER_REQUEST = 2;
+    public static final int ADD_ROUTINE_REQUEST = 1;
+    public static final int EDIT_ROUTINE_REQUEST = 2;
 
-    private TimerViewModel timerViewModel;
+    private DataViewModel dataViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +35,30 @@ public class MainActivity extends AppCompatActivity {
         // created every time for each activity
         // instead we use Android's built-in provider, which takes as argument a fragment scope to
         // bind its lifecycle to if it has to create a new one
-        timerViewModel = new ViewModelProvider(this,
+        dataViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
-                .get(TimerViewModel.class);
+                .get(DataViewModel.class);
 
         RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        final TimerGroupAdapter adapter = new TimerGroupAdapter();
+        final RoutineListAdapter adapter = new RoutineListAdapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new TimerGroupAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new RoutineListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(TimerGroup timerGroup) {
-                Intent intent = new Intent(MainActivity.this, AddEditTimerActivity.class);
-                intent.putExtra(AddEditTimerActivity.EXTRA_TIMER_GROUP, timerGroup);
-                startActivityForResult(intent, EDIT_TIMER_REQUEST);
+            public void onItemClick(Routine routine) {
+                Intent intent = new Intent(MainActivity.this, AddEditRoutineActivity.class);
+                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE, routine);
+                startActivityForResult(intent, EDIT_ROUTINE_REQUEST);
             }
         });
 
-        timerViewModel.getAllTimerGroups().observe(this, new Observer<List<TimerGroup>>() {
+        dataViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
             @Override
-            public void onChanged(List<TimerGroup> timerGroups) {
-                adapter.setTimerGroups(timerGroups);
+            public void onChanged(List<Routine> routines) {
+                adapter.setRoutines(routines);
             }
         });
 
@@ -67,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddEditTimerActivity.class);
-                startActivityForResult(intent, ADD_TIMER_REQUEST);
+                Intent intent = new Intent(getApplicationContext(), AddEditRoutineActivity.class);
+                startActivityForResult(intent, ADD_ROUTINE_REQUEST);
             }
         });
     }
@@ -77,37 +76,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_TIMER_REQUEST && resultCode == RESULT_OK) {
-            TimerGroup timerGroup = (TimerGroup) data.getSerializableExtra(AddEditTimerActivity.EXTRA_TIMER_GROUP);
-            final List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditTimerActivity.EXTRA_TIMERS);
+        if (requestCode == ADD_ROUTINE_REQUEST && resultCode == RESULT_OK) {
+            Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+            final List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
 
-            final LiveData<Long> timerGroupId = timerViewModel.insertTimerGroup(timerGroup);
+            final LiveData<Long> routineResultId = dataViewModel.insertRoutine(routine);
 
-            Toast.makeText(this, "timer group saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "routine saved", Toast.LENGTH_SHORT).show();
             // insert child timers when timer group is successfully done
-            timerGroupId.observe(this, new Observer<Long>() {
+            routineResultId.observe(this, new Observer<Long>() {
                 @Override
                 public void onChanged(Long aLong) {
                     if (aLong != null) {
                         for (int i = 0; i < timers.size(); i++) {
                             Timer timer = timers.get(i);
-                            timerViewModel.insertTimer(timer, aLong);
+                            dataViewModel.insertTimer(timer, aLong);
                             Toast.makeText(MainActivity.this, "inserted routine timer " + String.valueOf(i), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
             });
 
-        } else if (requestCode == EDIT_TIMER_REQUEST && resultCode == RESULT_OK) {
-            TimerGroup timerGroup = (TimerGroup) data.getSerializableExtra(AddEditTimerActivity.EXTRA_TIMER_GROUP);
-            List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditTimerActivity.EXTRA_TIMERS);
-            timerViewModel.updateTimerGroup(timerGroup);
+        } else if (requestCode == EDIT_ROUTINE_REQUEST && resultCode == RESULT_OK) {
+            Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+            List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
+            dataViewModel.updateRoutine(routine);
             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
 
             for (int i = 0; i < timers.size(); i++) {
                 Timer timer = timers.get(i);
-                timerViewModel.insertTimer(timer, timerGroup.getId());
-                Toast.makeText(this, "Updated routine timer", Toast.LENGTH_SHORT).show();
+                dataViewModel.insertTimer(timer, routine.getId());
+                Toast.makeText(this, "Updated timer" + String.valueOf(i), Toast.LENGTH_SHORT).show();
             }
         } else {
 //            Toast.makeText(this, "Timer was not added.", Toast.LENGTH_SHORT).show();

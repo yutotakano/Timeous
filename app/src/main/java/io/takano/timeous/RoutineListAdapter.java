@@ -10,34 +10,34 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import io.takano.timeous.timerGroups.TimerGroup;
+import io.takano.timeous.routines.Routine;
 
-public class TimerGroupAdapter extends RecyclerView.Adapter<TimerGroupAdapter.TimerGroupHolder> {
+public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.TimerGroupHolder> {
     // Using ArrayList instead of List makes it non-null, cutting needs to check for null
-    private List<TimerGroup> timerGroups = new ArrayList<>();
+    private List<Routine> routines = new ArrayList<>();
     private OnItemClickListener listener;
 
     @NonNull
     @Override
     public TimerGroupHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_timer_group, parent, false);
+                .inflate(R.layout.item_routine, parent, false);
         return new TimerGroupHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TimerGroupHolder holder, int position) {
-        TimerGroup currentTimerGroup = timerGroups.get(position);
-        holder.textViewName.setText(currentTimerGroup.getName());
+        Routine currentRoutine = routines.get(position);
+        holder.textViewName.setText(currentRoutine.getName());
     }
 
     @Override
     public int getItemCount() {
-        return timerGroups.size();
+        return routines.size();
     }
 
-    public void setTimerGroups(List<TimerGroup> timerGroups) {
-        this.timerGroups = timerGroups;
+    public void setRoutines(List<Routine> routines) {
+        this.routines = routines;
         notifyDataSetChanged();
     }
 
@@ -55,7 +55,7 @@ public class TimerGroupAdapter extends RecyclerView.Adapter<TimerGroupAdapter.Ti
                     // make sure we don't click something that doesn't exist, like during a
                     // deletion animation
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(timerGroups.get(position));
+                        listener.onItemClick(routines.get(position));
                     }
                 }
             });
@@ -63,7 +63,7 @@ public class TimerGroupAdapter extends RecyclerView.Adapter<TimerGroupAdapter.Ti
     }
 
     public interface OnItemClickListener {
-        void onItemClick(TimerGroup timerGroup);
+        void onItemClick(Routine routine);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

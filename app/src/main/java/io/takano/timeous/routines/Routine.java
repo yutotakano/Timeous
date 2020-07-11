@@ -1,4 +1,4 @@
-package io.takano.timeous.timerGroups;
+package io.takano.timeous.routines;
 
 import java.io.Serializable;
 
@@ -8,8 +8,8 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @SuppressWarnings("CanBeFinal")
-@Entity(tableName = "timer_groups", indices = {@Index(value = "id", unique = true)})
-public class TimerGroup implements Serializable {
+@Entity(tableName = "routines", indices = {@Index(value = "id", unique = true)})
+public class Routine implements Serializable {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
@@ -17,7 +17,7 @@ public class TimerGroup implements Serializable {
 
     private String name;
 
-    public TimerGroup(String name) {
+    public Routine(String name) {
         this.name = name;
     }
 

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.takano.timeous.timerGroups.TimerGroup;
+import io.takano.timeous.routines.Routine;
 import io.takano.timeous.timers.Timer;
 
 import android.content.Intent;
@@ -19,17 +19,17 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddEditTimerActivity extends AppCompatActivity {
-    public static final String EXTRA_TIMER_GROUP = "io.takano.timeous.EXTRA_TIMER_GROUP";
+public class AddEditRoutineActivity extends AppCompatActivity {
+    public static final String EXTRA_ROUTINE = "io.takano.timeous.EXTRA_ROUTINE";
     public static final String EXTRA_TIMERS = "io.takano.timeous.EXTRA_TIMERS";
 
     private TextInputEditText editTextName;
-    private TimerGroup editingTimer;
+    private Routine editingTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_edit_timer);
+        setContentView(R.layout.activity_add_edit_routine);
 
         editTextName = findViewById(R.id.textInputName);
 
@@ -37,13 +37,13 @@ public class AddEditTimerActivity extends AppCompatActivity {
 
         List<Timer> timers = (List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS);
 
-        if (getIntent().hasExtra(EXTRA_TIMER_GROUP)) {
-            setTitle("Modify timer");
-            editingTimer = (TimerGroup) getIntent().getSerializableExtra(EXTRA_TIMER_GROUP);
+        if (getIntent().hasExtra(EXTRA_ROUTINE)) {
+            setTitle("Edit Routine");
+            editingTimer = (Routine) getIntent().getSerializableExtra(EXTRA_ROUTINE);
             editTextName.setText(editingTimer.getName());
         } else {
-            setTitle("Add new timer");
-            editingTimer = new TimerGroup(null);
+            setTitle("Create new routine");
+            editingTimer = new Routine(null);
         }
 
         // Initialise the RecyclerView for timers
@@ -51,8 +51,8 @@ public class AddEditTimerActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(false);
 
-        final TimerAdapter timerAdapter = new TimerAdapter();
-        recyclerView.setAdapter(timerAdapter);
+        final TimerListAdapter timerListAdapter = new TimerListAdapter();
+        recyclerView.setAdapter(timerListAdapter);
     }
 
     private void saveTimer() {
@@ -64,7 +64,7 @@ public class AddEditTimerActivity extends AppCompatActivity {
         editingTimer.setName(name);
 
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_TIMER_GROUP, editingTimer);
+        intent.putExtra(EXTRA_ROUTINE, editingTimer);
         intent.putExtra(EXTRA_TIMERS, new ArrayList<Timer>());
 
         setResult(RESULT_OK, intent);
