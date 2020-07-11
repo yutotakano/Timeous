@@ -1,6 +1,7 @@
 package io.takano.timeous;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,13 +35,20 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
         editTextName = findViewById(R.id.textInputName);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
+        }
 
         List<Timer> timers = (List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS);
 
         if (getIntent().hasExtra(EXTRA_ROUTINE)) {
             setTitle("Edit Routine");
             editingTimer = (Routine) getIntent().getSerializableExtra(EXTRA_ROUTINE);
+            if (editingTimer == null) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
             editTextName.setText(editingTimer.getName());
         } else {
             setTitle("Create new routine");
