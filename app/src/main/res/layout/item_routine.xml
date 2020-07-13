@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginEnd="@dimen/activity_horizontal_margin"
     android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:id="@+id/cardView"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
     app:rippleColor="@color/color_primary_light">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_vertical_margin"
-        android:minHeight="72dp">
+        android:minHeight="72dp"
+        android:padding="@dimen/activity_vertical_margin">
 
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@string/no_one_will_see_this"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:ellipsize="end"
-            android:maxLines="1"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.progressindicator.ProgressIndicator
+        android:id="@+id/indeterminateProgress"
+        style="@style/Widget.MaterialComponents.ProgressIndicator.Linear.Indeterminate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:indicatorColor="@color/color_primary"
+        app:indicatorWidth="1dp"
+        app:trackColor="@color/color_primary_lighter" />
 
 </com.google.android.material.card.MaterialCardView>

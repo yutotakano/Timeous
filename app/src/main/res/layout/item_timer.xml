@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginTop="@dimen/activity_horizontal_margin"
-    android:layout_marginEnd="@dimen/activity_vertical_margin">
+    android:layout_marginTop="@dimen/activity_horizontal_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,59 +13,60 @@
             android:id="@+id/imageViewIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_margin="8dp"
             android:contentDescription="@string/add_edit_routine_timers_list_icon_desc"
             android:scaleType="center"
             android:src="@drawable/ic_baseline_timer_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/descriptionLayout"
+            android:tint="@color/color_primary"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewHandle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/add_edit_routine_timers_list_handle_desc"
+            android:scaleType="center"
+            android:src="@drawable/ic_baseline_reorder_24"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/descriptionLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imageViewHandle"
+            android:layout_margin="8dp"
             app:layout_constraintStart_toEndOf="@id/imageViewIcon"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textViewName"
-                style="@style/TextAppearance.MaterialComponents.Body2"
+                style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/no_one_will_see_this"
-                app:layout_constraintBottom_toTopOf="@id/textViewSeconds"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textViewSeconds"
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="00:30"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewName" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
-            android:id="@+id/imageViewHandle"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/add_edit_routine_timers_list_handle_desc"
-            android:scaleType="center"
-            android:src="@drawable/ic_baseline_reorder_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/descriptionLayout"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewIcon">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextSeconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:text="00:30" />
+        </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
