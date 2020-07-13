@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "routines", indices = {@Index(value = "id", unique = true)})
 public class Routine implements Serializable {
 
+    @SuppressWarnings("NotNullFieldNotInitialized")
     @NonNull
     @PrimaryKey(autoGenerate = true)
     protected  Long id;

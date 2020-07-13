@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
@@ -82,11 +81,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_ROUTINE_REQUEST && resultCode == RESULT_OK) {
             Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+            @SuppressWarnings("unchecked")
             final List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
 
             final LiveData<Long> routineResultId = dataViewModel.insertRoutine(routine);
@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (requestCode == EDIT_ROUTINE_REQUEST && resultCode == RESULT_OK) {
             Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+            @SuppressWarnings("unchecked")
             List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
             dataViewModel.updateRoutine(routine);
             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();

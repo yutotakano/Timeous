@@ -20,7 +20,6 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
     private TextInputEditText editTextName;
     private Routine editingRoutine;
-    private MutableLiveData<List<Timer>> editingTimers = new MutableLiveData<>();
+    private final MutableLiveData<List<Timer>> editingTimers = new MutableLiveData<>();
     private MaterialButton deleteButton;
 
     @Override
@@ -70,6 +69,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
                 timerListAdapter.setTimers(timers);
             }
         });
+        //noinspection unchecked
         editingTimers.setValue((List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS));
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +103,10 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
     private void insertTimer() {
         List<Timer> currentTimers = editingTimers.getValue();
-        currentTimers.add(new Timer(-1L, 0, "test", 30));
-        editingTimers.setValue(currentTimers);
+        if (currentTimers != null) {
+            currentTimers.add(new Timer(-1L, 0, "test", 30));
+            editingTimers.setValue(currentTimers);
+        }
     }
 
     private void deleteRoutine() {
