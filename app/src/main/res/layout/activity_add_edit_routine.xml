@@ -27,7 +27,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewRoutinesLabel"
-        tools:listitem="@layout/item_timer" />
+        tools:listitem="@layout/item_timer"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="16dp"
+        android:cacheColorHint="#00000000"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/deleteButton"
