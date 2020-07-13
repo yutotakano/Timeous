@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.progressindicator.ProgressIndicator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
     // Using ArrayList instead of List makes it non-null, cutting needs to check for null
     private List<Routine> routines = new ArrayList<>();
     private OnItemClickListener listener;
+    private ProgressIndicator visibleBar;
 
     @NonNull
     @Override
@@ -43,10 +46,13 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
 
     class TimerGroupHolder extends RecyclerView.ViewHolder {
         private final TextView textViewName;
+        private final ProgressIndicator progressIndicator;
 
         public TimerGroupHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewName);
+            progressIndicator = itemView.findViewById(R.id.indeterminateProgress);
+            progressIndicator.setVisibility(View.INVISIBLE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -55,7 +61,9 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
                     // make sure we don't click something that doesn't exist, like during a
                     // deletion animation
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(routines.get(position));
+                        progressIndicator.setVisibility(View.VISIBLE);
+                        visibleBar = progressIndicator;
+                        listener.onItemClick(routines.get(position), position);
                     }
                 }
             });
@@ -63,10 +71,16 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Routine routine);
+        void onItemClick(Routine routine, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
+
+    public void clearProgress(int position) {
+        visibleBar.setVisibility(View.INVISIBLE);
+        visibleBar = null;
+    }
+
 }

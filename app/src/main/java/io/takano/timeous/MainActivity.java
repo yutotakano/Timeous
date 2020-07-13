@@ -15,8 +15,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,10 +50,17 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.setOnItemClickListener(new RoutineListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Routine routine) {
-                Intent intent = new Intent(MainActivity.this, AddEditRoutineActivity.class);
-                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE, routine);
-                startActivityForResult(intent, EDIT_ROUTINE_REQUEST);
+            public void onItemClick(final Routine routine, final int position) {
+                dataViewModel.getTimersInRoutine(routine.getId()).observe(MainActivity.this, new Observer<List<Timer>>() {
+                    @Override
+                    public void onChanged(List<Timer> timers) {
+                        adapter.clearProgress(position);
+                        Intent intent = new Intent(MainActivity.this, AddEditRoutineActivity.class);
+                        intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE, routine);
+                        intent.putExtra(AddEditRoutineActivity.EXTRA_TIMERS, (Serializable) timers);
+                        startActivityForResult(intent, EDIT_ROUTINE_REQUEST);
+                    }
+                });
             }
         });
 
