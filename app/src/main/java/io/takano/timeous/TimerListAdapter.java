@@ -44,7 +44,7 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
         // Check that position exists, for timers.get() returns OutOfBounds without it for the last item
         if (position != timers.size()) {
             Timer currentTimer = timers.get(position);
-            holder.editTextSeconds.setText(String.valueOf(currentTimer.getSeconds()));
+            holder.textViewTotalSeconds.setText(String.valueOf(currentTimer.getSeconds()));
             holder.textViewName.setText(currentTimer.getName());
         }
     }
@@ -83,12 +83,12 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
 
     class TimerHolder extends RecyclerView.ViewHolder {
         private final TextView textViewName;
-        private final TextInputEditText editTextSeconds;
+        private final TextView textViewTotalSeconds;
 
         public TimerHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewName);
-            editTextSeconds = itemView.findViewById(R.id.editTextSeconds);
+            textViewTotalSeconds = itemView.findViewById(R.id.textViewTotalSeconds);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
