@@ -20,7 +20,9 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
     private List<Timer> timers = new ArrayList<>();
     public static final Integer VIEW_TYPE_CELL = 1;
     public static final Integer VIEW_TYPE_BUTTON = 2;
-    private OnAddClickListener listener;
+    private OnAddClickListener addClickListener;
+    private OnItemClickListener itemClickListener;
+
 
     @NonNull
     @Override
@@ -93,7 +95,9 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
                 public void onClick(View view) {
                     final int position = getAdapterPosition();
                     if (position == timers.size() || (timers.size() == 0 && position == -1)) {
-                        listener.onAddClick();
+                        addClickListener.onAddClick();
+                    } else {
+                        itemClickListener.onItemClick();
                     }
                 }
             });
@@ -104,8 +108,16 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
         void onAddClick();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick();
+    }
+
     public void setOnAddClickListener(TimerListAdapter.OnAddClickListener listener) {
-        this.listener = listener;
+        this.addClickListener = listener;
+    }
+
+    public void setOnItemClickListener(TimerListAdapter.OnItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 
 }
