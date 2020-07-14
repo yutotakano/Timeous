@@ -15,6 +15,7 @@ import io.takano.timeous.timers.Timer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -128,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
                         Timer timer = timers.get(i);
                         dataViewModel.insertTimer(timer, aLong);
                     }
+                    routineResultId.removeObserver(this);
                 }
-                routineResultId.removeObserver(this);
             }
         });
     }
