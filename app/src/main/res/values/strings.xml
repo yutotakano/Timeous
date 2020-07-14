@@ -13,4 +13,7 @@
     <string name="timer_seconds_hint">Time</string>
     <string name="timer_add_icon_desc">Icon to add a new timer</string>
     <string name="timer_add_text">Add New Timer</string>
+    <string name="duration_picker_hours">h</string>
+    <string name="duration_picker_minutes">m</string>
+    <string name="duration_picker_seconds">s</string>
 </resources>

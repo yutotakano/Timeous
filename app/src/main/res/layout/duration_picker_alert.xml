@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/minutesPicker"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="h" />
+        android:text="@string/duration_picker_hours" />
     <NumberPicker
         android:id="@+id/minutesPicker"
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/secondsPicker"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="m" />
+        android:text="@string/duration_picker_minutes" />
     <NumberPicker
         android:id="@+id/secondsPicker"
         android:layout_width="wrap_content"
@@ -55,5 +55,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="s" />
+        android:text="@string/duration_picker_seconds" />
 </androidx.constraintlayout.widget.ConstraintLayout>
