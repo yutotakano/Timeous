@@ -87,16 +87,16 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewName);
             editTextSeconds = itemView.findViewById(R.id.editTextSeconds);
-            final int position = getAdapterPosition();
-            // if the Adapter cursor is past the last list item, or hasn't started with 0 items
-            if (position == timers.size() || (timers.size() == 0 && position == -1)) {
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final int position = getAdapterPosition();
+                    if (position == timers.size() || (timers.size() == 0 && position == -1)) {
                         listener.onAddClick();
                     }
-                });
-            }
+                }
+            });
         }
     }
 
