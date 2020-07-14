@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                                         new ActivityResultCallback<ActivityResult>() {
                                             @Override
                                             public void onActivityResult(ActivityResult result) {
+                                                adapter.clearProgress(position);
                                                 switch (result.getResultCode()) {
                                                     case RESULT_OK:
                                                         onRoutineEdited(result);
@@ -90,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         });
                         intentActivityResultLauncher.launch(intent);
-                        adapter.clearProgress(position);
                         // don't trigger again
                         timersObservable.removeObserver(this);
                     }
