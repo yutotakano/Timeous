@@ -199,6 +199,9 @@ public class AddEditRoutineActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.saveTimer:
                 saveRoutine();
                 return true;
@@ -209,4 +212,21 @@ public class AddEditRoutineActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Are you sure?")
+                .setMessage("Any active changes will be lost.")
+                .setNegativeButton("No, Stay", null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        AddEditRoutineActivity.super.onBackPressed();
+                    }
+                })
+                .show();
+    }
+
+
 }
