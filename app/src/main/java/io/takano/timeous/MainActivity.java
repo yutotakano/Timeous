@@ -25,9 +25,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int ADD_ROUTINE_REQUEST = 1;
-    public static final int EDIT_ROUTINE_REQUEST = 2;
-
     private DataViewModel dataViewModel;
 
     @Override
