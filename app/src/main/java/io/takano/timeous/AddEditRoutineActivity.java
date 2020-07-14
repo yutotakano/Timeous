@@ -116,9 +116,9 @@ public class AddEditRoutineActivity extends AppCompatActivity {
     }
 
     private void preFillDurationPickerView(View view, Integer totalSeconds) {
-        Integer hours = (int) Math.floor(totalSeconds / 3600.0);
-        Integer minutes = (int) Math.floor((totalSeconds - (hours * 3600)) / 60.0);
-        Integer seconds = totalSeconds - (hours * 3600) - (minutes * 60);
+        int hours = (int) Math.floor(totalSeconds / 3600.0);
+        int minutes = (int) Math.floor((totalSeconds - (hours * 3600)) / 60.0);
+        int seconds = totalSeconds - (hours * 3600) - (minutes * 60);
         NumberPicker hoursPicker = view.findViewById(R.id.hoursPicker);
         NumberPicker minutesPicker = view.findViewById(R.id.minutesPicker);
         NumberPicker secondsPicker = view.findViewById(R.id.secondsPicker);
