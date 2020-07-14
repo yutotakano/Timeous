@@ -100,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < timers.size(); i++) {
                             Timer timer = timers.get(i);
                             dataViewModel.insertTimer(timer, aLong);
-                            Toast.makeText(MainActivity.this, "inserted routine timer " + String.valueOf(i), Toast.LENGTH_SHORT).show();
                         }
                     }
+                    routineResultId.removeObserver(this);
                 }
             });
 
@@ -110,16 +110,25 @@ public class MainActivity extends AppCompatActivity {
             Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
             @SuppressWarnings("unchecked")
             List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
+            if (routine == null || timers == null) {
+                Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             dataViewModel.updateRoutine(routine);
-            Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
 
             for (int i = 0; i < timers.size(); i++) {
                 Timer timer = timers.get(i);
-                dataViewModel.updateTimer(timer);
-                Toast.makeText(this, "Updated timer" + String.valueOf(i), Toast.LENGTH_SHORT).show();
+                if (timer.getRoutineId() == -1) {
+                    dataViewModel.insertTimer(timer, routine.getId());
+                } else {
+                    dataViewModel.updateTimer(timer);
+                }
             }
+            Toast.makeText(this, "Updated routine and " + timers.size() + " timers", Toast.LENGTH_SHORT).show();
         } else if (requestCode == EDIT_ROUTINE_REQUEST && resultCode == AddEditRoutineActivity.RESULT_DELETE) {
             Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+
             dataViewModel.deleteRoutine(routine);
             dataViewModel.deleteTimersInRoutine(routine.getId());
             Toast.makeText(this, "Routine and its timers deleted permanently", Toast.LENGTH_SHORT).show();
