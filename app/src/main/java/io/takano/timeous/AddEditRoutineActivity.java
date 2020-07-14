@@ -97,7 +97,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         if (currentTimers == null) {
             currentTimers = new ArrayList<>();
         }
-        currentTimers.add(new Timer(-1L, 0, "test", 30));
+        currentTimers.add(new Timer(-1L, currentTimers.size(), "test", 30));
         editingTimers.setValue(currentTimers);
     }
 
