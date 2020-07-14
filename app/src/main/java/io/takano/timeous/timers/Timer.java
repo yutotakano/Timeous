@@ -1,7 +1,5 @@
 package io.takano.timeous.timers;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 import androidx.annotation.NonNull;
