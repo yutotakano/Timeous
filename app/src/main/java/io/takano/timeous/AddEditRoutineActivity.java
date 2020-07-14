@@ -15,14 +15,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddEditRoutineActivity extends AppCompatActivity {
@@ -95,10 +95,11 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
     private void insertTimer() {
         List<Timer> currentTimers = editingTimers.getValue();
-        if (currentTimers != null) {
-            currentTimers.add(new Timer(-1L, 0, "test", 30));
-            editingTimers.setValue(currentTimers);
+        if (currentTimers == null) {
+            currentTimers = new ArrayList<>();
         }
+        currentTimers.add(new Timer(-1L, 0, "test", 30));
+        editingTimers.setValue(currentTimers);
     }
 
     private void deleteRoutine() {
