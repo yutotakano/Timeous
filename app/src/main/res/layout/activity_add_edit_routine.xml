@@ -4,52 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_vertical_margin"
     tools:context=".AddEditRoutineActivity">
-
-    <TextView
-        android:id="@+id/textViewRoutinesLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/add_edit_routine_timers_label"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@id/timersRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutName" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/timersRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/deleteButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewRoutinesLabel"
-        tools:listitem="@layout/item_timer"
-        android:requiresFadingEdge="vertical"
-        android:fadingEdgeLength="16dp"
-        android:cacheColorHint="#00000000"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/deleteButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/add_edit_routine_delete_button_text"
-        android:textColor="@color/color_error"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timersRecyclerView" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutName"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:hint="@string/add_edit_routine_name_hint"
         app:boxBackgroundColor="@color/color_pure_white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,5 +24,31 @@
             android:layout_height="wrap_content"
             android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textViewRoutinesLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:text="@string/add_edit_routine_timers_label"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/timersRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutName" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/timersRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewRoutinesLabel"
+        tools:listitem="@layout/item_timer"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="16dp"
+        android:cacheColorHint="#00000000"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
