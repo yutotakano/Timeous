@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.routines.Routine;
 import io.takano.timeous.timers.Timer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -66,12 +67,27 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         });
         timerListAdapter.setOnItemClickListener(new TimerListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Timer timer) {
-                View durationPickerView = createNewDurationPickerView();
+            public void onItemClick(final Timer timer) {
+                final View durationPickerView = createNewDurationPickerView();
                 preFillDurationPickerView(durationPickerView, timer.getSeconds());
                 new MaterialAlertDialogBuilder(AddEditRoutineActivity.this)
                         .setTitle("How long should the timer be?")
                         .setView(durationPickerView)
+                        .setCancelable(false)
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Integer totalSeconds = parseDurationPickerValues(durationPickerView);
+                                timer.setSeconds(totalSeconds);
+                                timerListAdapter.notifyDataSetChanged();
+                            }
+                        })
                         .show();
             }
         });
@@ -110,6 +126,13 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         hourPicker.setValue(hours);
         minutePicker.setValue(minutes);
         secondPicker.setValue(seconds);
+    }
+
+    private Integer parseDurationPickerValues(View view) {
+        NumberPicker hourPicker = view.findViewById(R.id.hour_picker);
+        NumberPicker minutePicker = view.findViewById(R.id.minute_picker);
+        NumberPicker secondPicker = view.findViewById(R.id.seconds_picker);
+        return hourPicker.getValue() * 3600 + minutePicker.getValue() * 60 + secondPicker.getValue();
     }
 
     private void initializeViews() {
