@@ -23,7 +23,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddEditRoutineActivity extends AppCompatActivity {
@@ -31,10 +30,10 @@ public class AddEditRoutineActivity extends AppCompatActivity {
     public static final String EXTRA_TIMERS = "io.takano.timeous.EXTRA_TIMERS";
     public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 
+    public static Boolean showDelete = false;
     private TextInputEditText editTextName;
     private Routine editingRoutine;
     private final MutableLiveData<List<Timer>> editingTimers = new MutableLiveData<>();
-    private MaterialButton deleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_routine);
 
         editTextName = findViewById(R.id.textInputName);
-        deleteButton = findViewById(R.id.deleteButton);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -73,19 +71,12 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         //noinspection unchecked
         editingTimers.setValue((List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS));
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteRoutine();
-            }
-        });
-
     }
 
     private void initializeViews() {
         if (getIntent().hasExtra(EXTRA_ROUTINE)) {
             setTitle("Edit Routine");
-            deleteButton.setVisibility(View.VISIBLE);
+            showDelete = true;
             editingRoutine = (Routine) getIntent().getSerializableExtra(EXTRA_ROUTINE);
             if (editingRoutine == null) {
                 setResult(RESULT_CANCELED);
@@ -94,7 +85,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             editTextName.setText(editingRoutine.getName());
         } else {
             setTitle("Create new routine");
-            deleteButton.setVisibility(View.INVISIBLE);
+            showDelete = false;
             editingRoutine = new Routine(null);
             if (editTextName.requestFocus()) {
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -136,7 +127,9 @@ public class AddEditRoutineActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_edit_timer_menu, menu);
+        menuInflater.inflate(R.menu.add_edit_routine_menu, menu);
+        // show or hide delete button
+        menu.getItem(0).setVisible(showDelete);
         return true;
     }
 
@@ -145,6 +138,9 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.saveTimer:
                 saveRoutine();
+                return true;
+            case R.id.deleteTimer:
+                deleteRoutine();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

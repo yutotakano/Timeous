@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/deleteTimer"
+        android:icon="@drawable/ic_twotone_delete_24"
+        android:title="@string/add_edit_routine_menu_delete"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/saveTimer"
         android:icon="@drawable/ic_baseline_check_24"
-        android:title="@string/add_edit_routine_app_bar_menu_save"
+        android:title="@string/add_edit_routine_menu_save"
         app:showAsAction="ifRoom" />
 </menu>
