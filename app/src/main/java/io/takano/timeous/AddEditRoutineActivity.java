@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.Serializable;
@@ -61,6 +62,15 @@ public class AddEditRoutineActivity extends AppCompatActivity {
                 insertTimer();
             }
         });
+        timerListAdapter.setOnItemClickListener(new TimerListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                new MaterialAlertDialogBuilder(AddEditRoutineActivity.this)
+                        .setTitle("How long should the timer be?")
+                        .setView(R.layout.duration_picker_alert)
+                        .show();
+            }
+        });
         editingTimers.observe(this, new Observer<List<Timer>>() {
             @Override
             public void onChanged(List<Timer> timers) {
@@ -97,7 +107,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         if (currentTimers == null) {
             currentTimers = new ArrayList<>();
         }
-        currentTimers.add(new Timer(-1L, currentTimers.size(), "test", 30));
+        currentTimers.add(new Timer(-1L, currentTimers.size(), "Timer " + (currentTimers.size() + 1), 30));
         editingTimers.setValue(currentTimers);
     }
 
