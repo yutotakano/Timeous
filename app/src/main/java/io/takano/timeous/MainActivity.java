@@ -120,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
         Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
         @SuppressWarnings("unchecked") final List<Timer> timers = (List<Timer>)
                 result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
+        if (routine == null || timers == null) {
+            Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         final LiveData<Long> routineResultId = dataViewModel.insertRoutine(routine);
 
