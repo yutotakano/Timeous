@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.NumberPicker;
-import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
@@ -174,7 +173,15 @@ public class AddEditRoutineActivity extends AppCompatActivity {
     private void saveRoutine() {
         String name = editTextName.getEditableText().toString();
         if (name.trim().isEmpty()) {
-            Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT).show();
+            new MaterialAlertDialogBuilder(this)
+                    .setMessage("Please enter a routine name")
+                    .show();
+            return;
+        }
+        if (editingTimers.getValue() == null || editingTimers.getValue().size() == 0) {
+            new MaterialAlertDialogBuilder(this)
+                    .setMessage("Please add one or more timers")
+                    .show();
             return;
         }
         editingRoutine.setName(name);
