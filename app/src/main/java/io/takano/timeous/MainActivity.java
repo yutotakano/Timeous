@@ -12,6 +12,7 @@ import io.takano.timeous.timers.Timer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -50,14 +51,17 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new RoutineListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final Routine routine, final int position) {
-                dataViewModel.getTimersInRoutine(routine.getId()).observe(MainActivity.this, new Observer<List<Timer>>() {
+                final LiveData<List<Timer>> timersObservable = dataViewModel.getTimersInRoutine(routine.getId());
+                timersObservable.observe(MainActivity.this, new Observer<List<Timer>>() {
                     @Override
                     public void onChanged(List<Timer> timers) {
-                        adapter.clearProgress(position);
                         Intent intent = new Intent(MainActivity.this, AddEditRoutineActivity.class);
                         intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE, routine);
                         intent.putExtra(AddEditRoutineActivity.EXTRA_TIMERS, (Serializable) timers);
+                        adapter.clearProgress(position);
                         startActivityForResult(intent, EDIT_ROUTINE_REQUEST);
+                        // don't trigger again
+                        timersObservable.removeObserver(this);
                     }
                 });
             }
@@ -86,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == ADD_ROUTINE_REQUEST && resultCode == RESULT_OK) {
             Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
-            @SuppressWarnings("unchecked")
-            final List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
+            @SuppressWarnings("unchecked") final List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
 
             final LiveData<Long> routineResultId = dataViewModel.insertRoutine(routine);
 

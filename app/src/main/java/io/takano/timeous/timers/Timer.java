@@ -1,5 +1,9 @@
 package io.takano.timeous.timers;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -7,7 +11,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "timers", indices = {@Index(value = "id", unique = true)})
-public class Timer {
+public class Timer implements Serializable {
 
     @SuppressWarnings("NotNullFieldNotInitialized")
     @NonNull

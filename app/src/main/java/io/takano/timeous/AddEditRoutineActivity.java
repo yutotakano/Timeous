@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +127,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
         Intent intent = new Intent();
         intent.putExtra(EXTRA_ROUTINE, editingRoutine);
-        intent.putExtra(EXTRA_TIMERS, new ArrayList<Timer>());
+        intent.putExtra(EXTRA_TIMERS, (Serializable) editingTimers.getValue());
 
         setResult(RESULT_OK, intent);
         finish(); // close activity
