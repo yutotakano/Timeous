@@ -113,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onRoutineAdded(ActivityResult result) {
+        if (result.getData() == null) {
+            Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
         @SuppressWarnings("unchecked") final List<Timer> timers = (List<Timer>)
                 result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
@@ -135,6 +139,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onRoutineEdited(ActivityResult result) {
+        if (result.getData() == null) {
+            Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
         @SuppressWarnings("unchecked")
         List<Timer> timers = (List<Timer>) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
@@ -157,8 +165,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onRoutineDeleted(ActivityResult result) {
+        if (result.getData() == null) {
+            Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
-
+        if (routine == null) {
+            Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         dataViewModel.deleteRoutine(routine);
         dataViewModel.deleteTimersInRoutine(routine.getId());
         Toast.makeText(this, "Routine and its timers deleted permanently", Toast.LENGTH_SHORT).show();
