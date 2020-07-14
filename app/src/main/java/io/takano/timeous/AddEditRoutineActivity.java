@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -64,10 +66,12 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         });
         timerListAdapter.setOnItemClickListener(new TimerListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick() {
+            public void onItemClick(Timer timer) {
+                View durationPickerView = createNewDurationPickerView();
+                preFillDurationPickerView(durationPickerView, timer.getSeconds());
                 new MaterialAlertDialogBuilder(AddEditRoutineActivity.this)
                         .setTitle("How long should the timer be?")
-                        .setView(R.layout.duration_picker_alert)
+                        .setView(durationPickerView)
                         .show();
             }
         });
@@ -80,6 +84,32 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         //noinspection unchecked
         editingTimers.setValue((List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS));
 
+    }
+
+    private View createNewDurationPickerView() {
+        View view = View.inflate(this, R.layout.duration_picker_alert, null);
+        NumberPicker hourPicker = view.findViewById(R.id.hour_picker);
+        NumberPicker minutePicker = view.findViewById(R.id.minute_picker);
+        NumberPicker secondPicker = view.findViewById(R.id.seconds_picker);
+        hourPicker.setMaxValue(99);
+        hourPicker.setMinValue(0);
+        minutePicker.setMaxValue(59);
+        minutePicker.setMinValue(0);
+        secondPicker.setMaxValue(59);
+        secondPicker.setMinValue(0);
+        return view;
+    }
+
+    private void preFillDurationPickerView(View view, Integer totalSeconds) {
+        Integer hours = (int) Math.floor(totalSeconds / 3600.0);
+        Integer minutes = (int) Math.floor((totalSeconds - (hours * 3600)) / 60.0);
+        Integer seconds = totalSeconds - (hours * 3600) - (minutes * 60);
+        NumberPicker hourPicker = view.findViewById(R.id.hour_picker);
+        NumberPicker minutePicker = view.findViewById(R.id.minute_picker);
+        NumberPicker secondPicker = view.findViewById(R.id.seconds_picker);
+        hourPicker.setValue(hours);
+        minutePicker.setValue(minutes);
+        secondPicker.setValue(seconds);
     }
 
     private void initializeViews() {

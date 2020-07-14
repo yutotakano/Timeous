@@ -97,7 +97,7 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
                     if (position == timers.size() || (timers.size() == 0 && position == -1)) {
                         addClickListener.onAddClick();
                     } else {
-                        itemClickListener.onItemClick();
+                        itemClickListener.onItemClick(timers.get(position));
                     }
                 }
             });
@@ -109,7 +109,7 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
     }
 
     public interface OnItemClickListener {
-        void onItemClick();
+        void onItemClick(Timer timer);
     }
 
     public void setOnAddClickListener(TimerListAdapter.OnAddClickListener listener) {
