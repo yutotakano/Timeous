@@ -1,5 +1,9 @@
 package io.takano.timeous;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -46,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
         final RoutineListAdapter adapter = new RoutineListAdapter();
         recyclerView.setAdapter(adapter);
 
+        final ActivityResultLauncher<Intent> addIntentActivityResultLauncher =
+                registerForActivityResult(
+                        new ActivityResultContracts.StartActivityForResult(),
+                        new ActivityResultCallback<ActivityResult>() {
+                            @Override
+                            public void onActivityResult(ActivityResult result) {
+                                if (result.getResultCode() == RESULT_OK)
+                                    onRoutineAdded(result);
+                            }
+                        });
+
         adapter.setOnItemClickListener(new RoutineListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final Routine routine, final int position) {
@@ -56,8 +71,26 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, AddEditRoutineActivity.class);
                         intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE, routine);
                         intent.putExtra(AddEditRoutineActivity.EXTRA_TIMERS, (Serializable) timers);
+                        final ActivityResultLauncher<Intent> intentActivityResultLauncher =
+                                registerForActivityResult(
+                                        new ActivityResultContracts.StartActivityForResult(),
+                                        new ActivityResultCallback<ActivityResult>() {
+                                            @Override
+                                            public void onActivityResult(ActivityResult result) {
+                                                switch (result.getResultCode()) {
+                                                    case RESULT_OK:
+                                                        onRoutineEdited(result);
+                                                        break;
+                                                    case AddEditRoutineActivity.RESULT_DELETE:
+                                                        onRoutineDeleted(result);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                            }
+                                        });
+                        intentActivityResultLauncher.launch(intent);
                         adapter.clearProgress(position);
-                        startActivityForResult(intent, EDIT_ROUTINE_REQUEST);
                         // don't trigger again
                         timersObservable.removeObserver(this);
                     }
@@ -72,68 +105,66 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.mainAppBarAdd);
+        FloatingActionButton addButton = findViewById(R.id.mainAppBarAdd);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddEditRoutineActivity.class);
-                startActivityForResult(intent, ADD_ROUTINE_REQUEST);
+                addIntentActivityResultLauncher.launch(intent);
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void onRoutineAdded(ActivityResult result) {
+        Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+        @SuppressWarnings("unchecked") final List<Timer> timers = (List<Timer>)
+                result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
 
-        if (requestCode == ADD_ROUTINE_REQUEST && resultCode == RESULT_OK) {
-            Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
-            @SuppressWarnings("unchecked") final List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
+        final LiveData<Long> routineResultId = dataViewModel.insertRoutine(routine);
 
-            final LiveData<Long> routineResultId = dataViewModel.insertRoutine(routine);
-
-            // insert child timers when timer group is successfully done
-            routineResultId.observe(this, new Observer<Long>() {
-                @Override
-                public void onChanged(Long aLong) {
-                    if (aLong != null) {
-                        for (int i = 0; i < timers.size(); i++) {
-                            Timer timer = timers.get(i);
-                            dataViewModel.insertTimer(timer, aLong);
-                        }
+        // insert child timers when timer group is successfully done
+        routineResultId.observe(this, new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                if (aLong != null) {
+                    for (int i = 0; i < timers.size(); i++) {
+                        Timer timer = timers.get(i);
+                        dataViewModel.insertTimer(timer, aLong);
                     }
-                    routineResultId.removeObserver(this);
                 }
-            });
-
-        } else if (requestCode == EDIT_ROUTINE_REQUEST && resultCode == RESULT_OK) {
-            Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
-            @SuppressWarnings("unchecked")
-            List<Timer> timers = (List<Timer>) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
-            if (routine == null || timers == null) {
-                Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
-                return;
+                routineResultId.removeObserver(this);
             }
-
-            dataViewModel.updateRoutine(routine);
-
-            for (int i = 0; i < timers.size(); i++) {
-                Timer timer = timers.get(i);
-                if (timer.getRoutineId() == -1) {
-                    dataViewModel.insertTimer(timer, routine.getId());
-                } else {
-                    dataViewModel.updateTimer(timer);
-                }
-            }
-            Toast.makeText(this, "Updated routine and " + timers.size() + " timers", Toast.LENGTH_SHORT).show();
-        } else if (requestCode == EDIT_ROUTINE_REQUEST && resultCode == AddEditRoutineActivity.RESULT_DELETE) {
-            Routine routine = (Routine) data.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
-
-            dataViewModel.deleteRoutine(routine);
-            dataViewModel.deleteTimersInRoutine(routine.getId());
-            Toast.makeText(this, "Routine and its timers deleted permanently", Toast.LENGTH_SHORT).show();
-        } else {
-//            Toast.makeText(this, "Timer was not added.", Toast.LENGTH_SHORT).show();
-        }
+        });
     }
+
+    private void onRoutineEdited(ActivityResult result) {
+        Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+        @SuppressWarnings("unchecked")
+        List<Timer> timers = (List<Timer>) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
+        if (routine == null || timers == null) {
+            Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        dataViewModel.updateRoutine(routine);
+
+        for (int i = 0; i < timers.size(); i++) {
+            Timer timer = timers.get(i);
+            if (timer.getRoutineId() == -1) {
+                dataViewModel.insertTimer(timer, routine.getId());
+            } else {
+                dataViewModel.updateTimer(timer);
+            }
+        }
+        Toast.makeText(this, "Updated routine and " + timers.size() + " timers", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onRoutineDeleted(ActivityResult result) {
+        Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+
+        dataViewModel.deleteRoutine(routine);
+        dataViewModel.deleteTimersInRoutine(routine.getId());
+        Toast.makeText(this, "Routine and its timers deleted permanently", Toast.LENGTH_SHORT).show();
+    }
+
 }
