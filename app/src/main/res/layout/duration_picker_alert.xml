@@ -5,27 +5,54 @@
     android:layout_height="match_parent">
 
     <NumberPicker
-        android:id="@+id/hour_picker"
+        android:id="@+id/hoursPicker"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/minute_picker"
+        app:layout_constraintEnd_toStartOf="@id/hoursLabel"
         app:layout_constraintBottom_toBottomOf="parent" />
-    <NumberPicker
-        android:id="@+id/minute_picker"
+    <TextView
+        android:id="@+id/hoursLabel"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@id/hour_picker"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/hoursPicker"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/seconds_picker"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/minutesPicker"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="h" />
     <NumberPicker
-        android:id="@+id/seconds_picker"
+        android:id="@+id/minutesPicker"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@id/minute_picker"
+        app:layout_constraintStart_toEndOf="@id/hoursLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/minutesLabel"
+        app:layout_constraintBottom_toBottomOf="parent" />
+    <TextView
+        android:id="@+id/minutesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/minutesPicker"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/secondsPicker"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="m" />
+    <NumberPicker
+        android:id="@+id/secondsPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@id/minutesLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/secondsLabel"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/secondsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/secondsPicker"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="s" />
 </androidx.constraintlayout.widget.ConstraintLayout>

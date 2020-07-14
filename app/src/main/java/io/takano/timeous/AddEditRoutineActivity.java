@@ -104,15 +104,15 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
     private View createNewDurationPickerView() {
         View view = View.inflate(this, R.layout.duration_picker_alert, null);
-        NumberPicker hourPicker = view.findViewById(R.id.hour_picker);
-        NumberPicker minutePicker = view.findViewById(R.id.minute_picker);
-        NumberPicker secondPicker = view.findViewById(R.id.seconds_picker);
-        hourPicker.setMaxValue(99);
-        hourPicker.setMinValue(0);
-        minutePicker.setMaxValue(59);
-        minutePicker.setMinValue(0);
-        secondPicker.setMaxValue(59);
-        secondPicker.setMinValue(0);
+        NumberPicker hoursPicker = view.findViewById(R.id.hoursPicker);
+        NumberPicker minutesPicker = view.findViewById(R.id.minutesPicker);
+        NumberPicker secondsPicker = view.findViewById(R.id.secondsPicker);
+        hoursPicker.setMaxValue(99);
+        hoursPicker.setMinValue(0);
+        minutesPicker.setMaxValue(59);
+        minutesPicker.setMinValue(0);
+        secondsPicker.setMaxValue(59);
+        secondsPicker.setMinValue(0);
         return view;
     }
 
@@ -120,19 +120,19 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         Integer hours = (int) Math.floor(totalSeconds / 3600.0);
         Integer minutes = (int) Math.floor((totalSeconds - (hours * 3600)) / 60.0);
         Integer seconds = totalSeconds - (hours * 3600) - (minutes * 60);
-        NumberPicker hourPicker = view.findViewById(R.id.hour_picker);
-        NumberPicker minutePicker = view.findViewById(R.id.minute_picker);
-        NumberPicker secondPicker = view.findViewById(R.id.seconds_picker);
-        hourPicker.setValue(hours);
-        minutePicker.setValue(minutes);
-        secondPicker.setValue(seconds);
+        NumberPicker hoursPicker = view.findViewById(R.id.hoursPicker);
+        NumberPicker minutesPicker = view.findViewById(R.id.minutesPicker);
+        NumberPicker secondsPicker = view.findViewById(R.id.secondsPicker);
+        hoursPicker.setValue(hours);
+        minutesPicker.setValue(minutes);
+        secondsPicker.setValue(seconds);
     }
 
     private Integer parseDurationPickerValues(View view) {
-        NumberPicker hourPicker = view.findViewById(R.id.hour_picker);
-        NumberPicker minutePicker = view.findViewById(R.id.minute_picker);
-        NumberPicker secondPicker = view.findViewById(R.id.seconds_picker);
-        return hourPicker.getValue() * 3600 + minutePicker.getValue() * 60 + secondPicker.getValue();
+        NumberPicker hoursPicker = view.findViewById(R.id.hoursPicker);
+        NumberPicker minutesPicker = view.findViewById(R.id.minutesPicker);
+        NumberPicker secondsPicker = view.findViewById(R.id.secondsPicker);
+        return hoursPicker.getValue() * 3600 + minutesPicker.getValue() * 60 + secondsPicker.getValue();
     }
 
     private void initializeViews() {
