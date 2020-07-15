@@ -72,12 +72,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
                 new MaterialAlertDialogBuilder(AddEditRoutineActivity.this)
                         .setView(durationPickerView)
                         .setCancelable(false)
-                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        })
+                        .setNeutralButton("Cancel", null)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
