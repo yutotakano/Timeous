@@ -81,7 +81,7 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
         notifyDataSetChanged();
     }
 
-    class TimerHolder extends RecyclerView.ViewHolder {
+    class TimerHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView textViewName;
         private final TextView textViewTotalSeconds;
 
@@ -90,17 +90,17 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.Time
             textViewName = itemView.findViewById(R.id.textViewName);
             textViewTotalSeconds = itemView.findViewById(R.id.textViewTotalSeconds);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final int position = getAdapterPosition();
-                    if (position == timers.size() || (timers.size() == 0 && position == -1)) {
-                        addClickListener.onAddClick();
-                    } else {
-                        itemClickListener.onItemClick(timers.get(position));
-                    }
-                }
-            });
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            final int position = getAdapterPosition();
+            if (position == timers.size() || (timers.size() == 0 && position == -1)) {
+                addClickListener.onAddClick();
+            } else {
+                itemClickListener.onItemClick(timers.get(position));
+            }
         }
     }
 

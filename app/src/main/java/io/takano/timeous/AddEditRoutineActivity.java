@@ -68,9 +68,8 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             @Override
             public void onItemClick(final Timer timer) {
                 final View durationPickerView = createNewDurationPickerView();
-                preFillDurationPickerView(durationPickerView, timer.getSeconds());
+                preFillDurationPickerView(durationPickerView, timer.getSeconds(), timer.getName());
                 new MaterialAlertDialogBuilder(AddEditRoutineActivity.this)
-                        .setTitle("How long should the timer be?")
                         .setView(durationPickerView)
                         .setCancelable(false)
                         .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -82,7 +81,9 @@ public class AddEditRoutineActivity extends AppCompatActivity {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                String name = parseDurationPickerName(durationPickerView);
                                 Integer totalSeconds = parseDurationPickerValues(durationPickerView);
+                                timer.setName(name);
                                 timer.setSeconds(totalSeconds);
                                 timerListAdapter.notifyDataSetChanged();
                             }
@@ -115,16 +116,23 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         return view;
     }
 
-    private void preFillDurationPickerView(View view, Integer totalSeconds) {
+    private void preFillDurationPickerView(View view, Integer totalSeconds, String name) {
         int hours = (int) Math.floor(totalSeconds / 3600.0);
         int minutes = (int) Math.floor((totalSeconds - (hours * 3600)) / 60.0);
         int seconds = totalSeconds - (hours * 3600) - (minutes * 60);
         NumberPicker hoursPicker = view.findViewById(R.id.hoursPicker);
         NumberPicker minutesPicker = view.findViewById(R.id.minutesPicker);
         NumberPicker secondsPicker = view.findViewById(R.id.secondsPicker);
+        TextInputEditText editText = view.findViewById(R.id.textInputTimerName);
         hoursPicker.setValue(hours);
         minutesPicker.setValue(minutes);
         secondsPicker.setValue(seconds);
+        editText.setText(name);
+    }
+
+    private String parseDurationPickerName(View view) {
+        TextInputEditText editText = view.findViewById(R.id.textInputTimerName);
+        return editText.getEditableText().toString();
     }
 
     private Integer parseDurationPickerValues(View view) {
