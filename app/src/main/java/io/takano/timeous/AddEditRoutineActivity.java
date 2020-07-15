@@ -222,10 +222,10 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.saveTimer:
+            case R.id.saveRoutine:
                 saveRoutine();
                 return true;
-            case R.id.deleteTimer:
+            case R.id.deleteRoutine:
                 deleteRoutine();
                 return true;
             default:

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/deleteTimer"
+    <item android:id="@+id/deleteRoutine"
         android:icon="@drawable/ic_twotone_delete_24"
         android:title="@string/add_edit_routine_menu_delete"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/saveTimer"
+        android:id="@+id/saveRoutine"
         android:icon="@drawable/ic_baseline_check_24"
         android:title="@string/add_edit_routine_menu_save"
         app:showAsAction="ifRoom" />

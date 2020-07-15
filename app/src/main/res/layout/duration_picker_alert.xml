@@ -9,7 +9,7 @@
         android:id="@+id/textInputLayoutTimerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/no_one_will_see_this"
+        android:hint="@string/duration_picker_name_hint"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         app:boxBackgroundColor="@color/color_pure_white"

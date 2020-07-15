@@ -2,18 +2,18 @@
     <string name="app_name">Timeous</string>
     <string name="main_app_bar_settings_name">Settings</string>
     <string name="main_app_bar_settings_desc">Modify Settings</string>
+    <string name="add_edit_routine_menu_save">Save</string>
+    <string name="add_edit_routine_menu_delete">Delete</string>
     <string name="add_edit_routine_name_hint">Name of Routine</string>
     <string name="add_edit_routine_timers_label">Timers</string>
     <string name="add_edit_routine_timers_list_icon_desc">Icon of a timer</string>
     <string name="add_edit_routine_timers_list_handle_desc">Use this handle to reorder the timers</string>
-    <string name="add_edit_routine_menu_save">Save</string>
-    <string name="add_edit_routine_menu_delete">Delete</string>
-    <string name="add_edit_routine_delete_button_text">Delete Routine</string>
-    <string name="no_one_will_see_this">No one will see this text</string>
-    <string name="timer_seconds_hint">Time</string>
-    <string name="timer_add_icon_desc">Icon to add a new timer</string>
-    <string name="timer_add_text">Add New Timer</string>
+    <string name="duration_picker_name_hint">Name of Timer</string>
     <string name="duration_picker_hours">h</string>
     <string name="duration_picker_minutes">m</string>
     <string name="duration_picker_seconds">s</string>
+    <string name="timer_add_icon_desc">Icon to add a new timer</string>
+    <string name="timer_add_text">Add New Timer</string>
+
+    <string name="no_one_will_see_this">No one will see this text</string>
 </resources>
