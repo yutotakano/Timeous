@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         dataViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
             @Override
             public void onChanged(List<Routine> routines) {
-                adapter.setRoutines(routines);
+                adapter.submitList(routines);
             }
         });
 
@@ -178,8 +178,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
             return;
         }
-        dataViewModel.deleteRoutine(routine);
         dataViewModel.deleteTimersInRoutine(routine.getId());
+        dataViewModel.deleteRoutine(routine);
         Toast.makeText(this, "Routine and its timers deleted permanently", Toast.LENGTH_SHORT).show();
     }
 

@@ -7,18 +7,33 @@ import android.widget.TextView;
 
 import com.google.android.material.progressindicator.ProgressIndicator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.routines.Routine;
 
-public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.TimerGroupHolder> {
-    // Using ArrayList instead of List makes it non-null, cutting needs to check for null
-    private List<Routine> routines = new ArrayList<>();
+public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.TimerGroupHolder> {
     private OnItemClickListener listener;
     private ProgressIndicator visibleBar;
+
+    private static final DiffUtil.ItemCallback<Routine> DIFF_CALLBACK = new DiffUtil.ItemCallback<Routine>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Routine oldItem, @NonNull Routine newItem) {
+            return oldItem.getId().equals(newItem.getId());
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Routine oldItem, @NonNull Routine newItem) {
+            return oldItem.getName().equals(newItem.getName());
+        }
+    };
+
+    public RoutineListAdapter() {
+        super(DIFF_CALLBACK);
+    }
 
     @NonNull
     @Override
@@ -30,18 +45,8 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull TimerGroupHolder holder, int position) {
-        Routine currentRoutine = routines.get(position);
+        Routine currentRoutine = getItem(position);
         holder.textViewName.setText(currentRoutine.getName());
-    }
-
-    @Override
-    public int getItemCount() {
-        return routines.size();
-    }
-
-    public void setRoutines(List<Routine> routines) {
-        this.routines = routines;
-        notifyDataSetChanged();
     }
 
     class TimerGroupHolder extends RecyclerView.ViewHolder {
@@ -63,7 +68,7 @@ public class RoutineListAdapter extends RecyclerView.Adapter<RoutineListAdapter.
                     if (listener != null && position != RecyclerView.NO_POSITION) {
                         progressIndicator.setVisibility(View.VISIBLE);
                         visibleBar = progressIndicator;
-                        listener.onItemClick(routines.get(position), position);
+                        listener.onItemClick(getItem(position), position);
                     }
                 }
             });
