@@ -5,17 +5,25 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="16dp">
 
+    <View
+        android:id="@+id/paddingLeft"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/activity_vertical_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/hoursPicker"
+        app:layout_constraintBottom_toBottomOf="parent" />
     <NumberPicker
         android:id="@+id/hoursPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/paddingLeft"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/hoursLabel"
         app:layout_constraintBottom_toBottomOf="parent" />
     <TextView
         android:id="@+id/hoursLabel"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/hoursPicker"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +40,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
     <TextView
         android:id="@+id/minutesLabel"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/minutesPicker"
         app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +61,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/secondsPicker"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/paddingRight"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/duration_picker_seconds" />
+
+    <View
+        android:id="@+id/paddingRight"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/activity_vertical_margin"
+        app:layout_constraintStart_toEndOf="@id/secondsLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
