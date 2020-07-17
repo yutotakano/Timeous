@@ -7,6 +7,7 @@
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:colorBackground">@color/color_background</item>
         <item name="colorError">@color/color_error</item>
+        <item name="colorControlHighlight">@color/color_primary_light</item>
     </style>
 
 </resources>
