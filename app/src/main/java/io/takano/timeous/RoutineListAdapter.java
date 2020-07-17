@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.google.android.material.progressindicator.ProgressIndicator;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
