@@ -12,20 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="72dp"
-        android:paddingHorizontal="16dp">
+        android:paddingLeft="16dp">
 
         <LinearLayout
             android:id="@+id/editRoutineButtonContainer"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/editRoutineButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:padding="8dp"
                 android:layout_margin="12dp"
                 android:contentDescription="@string/no_one_will_see_this"
