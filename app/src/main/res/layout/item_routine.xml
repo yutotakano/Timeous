@@ -15,7 +15,7 @@
         android:paddingHorizontal="16dp">
 
         <LinearLayout
-            android:id="@+id/startRoutineButtonContainer"
+            android:id="@+id/editRoutineButtonContainer"
             android:layout_width="72dp"
             android:layout_height="72dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -23,13 +23,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
-                android:id="@+id/startRoutineButton"
+                android:id="@+id/editRoutineButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:padding="8dp"
                 android:layout_margin="12dp"
                 android:contentDescription="@string/no_one_will_see_this"
-                android:src="@drawable/ic_round_play_arrow_24"
+                android:src="@drawable/ic_round_edit_24"
                 android:tint="@color/color_primary"
                 android:scaleType="fitCenter"
                 android:background="?android:attr/selectableItemBackgroundBorderless"/>

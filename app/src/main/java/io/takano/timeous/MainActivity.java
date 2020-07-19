@@ -63,6 +63,13 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new RoutineListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final Routine routine, final int position) {
+                Toast.makeText(MainActivity.this, routine.getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        adapter.setOnEditClickListener(new RoutineListAdapter.OnEditClickListener() {
+            @Override
+            public void onEditClick(final Routine routine, final int position) {
                 final LiveData<List<Timer>> timersObservable = dataViewModel.getTimersInRoutine(routine.getId());
                 timersObservable.observe(MainActivity.this, new Observer<List<Timer>>() {
                     @Override
@@ -94,13 +101,6 @@ public class MainActivity extends AppCompatActivity {
                         timersObservable.removeObserver(this);
                     }
                 });
-            }
-        });
-
-        adapter.setOnStartClickListener(new RoutineListAdapter.OnStartClickListener() {
-            @Override
-            public void onStartClick(Routine routine) {
-                Toast.makeText(MainActivity.this, routine.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
