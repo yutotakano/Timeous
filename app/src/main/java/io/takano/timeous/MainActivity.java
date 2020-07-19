@@ -64,17 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(final Routine routine, final int position) {
                 Intent intent = new Intent(MainActivity.this, ActiveTimerActivity.class);
-                final ActivityResultLauncher<Intent> intentActivityResultLauncher =
-                        registerForActivityResult(
-                                new ActivityResultContracts.StartActivityForResult(),
-                                new ActivityResultCallback<ActivityResult>() {
-                                    @Override
-                                    public void onActivityResult(ActivityResult result) {
-
-                                    }
-                                }
-                        );
-                intentActivityResultLauncher.launch(intent);
+                startActivity(intent);
             }
         });
 
