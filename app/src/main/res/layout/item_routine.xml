@@ -12,25 +12,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="72dp"
-        android:paddingVertical="@dimen/activity_vertical_margin"
         android:paddingHorizontal="16dp">
 
         <LinearLayout
             android:id="@+id/startRoutineButtonContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/startRoutineButton"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="8dp"
+                android:layout_margin="12dp"
                 android:contentDescription="@string/no_one_will_see_this"
-                android:src="@drawable/ic_twotone_play_circle_filled_24"
-                android:tint="@color/color_primary" />
+                android:src="@drawable/ic_round_play_arrow_24"
+                android:tint="@color/color_primary"
+                android:scaleType="fitCenter"
+                android:background="?android:attr/selectableItemBackgroundBorderless"/>
         </LinearLayout>
 
         <TextView
