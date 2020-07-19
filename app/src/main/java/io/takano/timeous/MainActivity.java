@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                         );
                 intentActivityResultLauncher.launch(intent);
-                Toast.makeText(MainActivity.this, routine.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
