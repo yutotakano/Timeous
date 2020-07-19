@@ -14,6 +14,7 @@
     <string name="duration_picker_seconds">s</string>
     <string name="timer_add_icon_desc">Icon to add a new timer</string>
     <string name="timer_add_text">Add New Timer</string>
+    <string name="default_time">00:00:00</string>
 
     <string name="no_one_will_see_this">No one will see this text</string>
 </resources>
