@@ -97,6 +97,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        adapter.setOnStartClickListener(new RoutineListAdapter.OnStartClickListener() {
+            @Override
+            public void onStartClick(Routine routine) {
+                Toast.makeText(MainActivity.this, routine.getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         dataViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
             @Override
             public void onChanged(List<Routine> routines) {

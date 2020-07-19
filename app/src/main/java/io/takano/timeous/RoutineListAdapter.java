@@ -3,6 +3,7 @@ package io.takano.timeous;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.progressindicator.ProgressIndicator;
@@ -15,6 +16,7 @@ import io.takano.timeous.routines.Routine;
 
 public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.TimerGroupHolder> {
     private OnItemClickListener listener;
+    private OnStartClickListener onStartClickListener;
     private ProgressIndicator visibleBar;
 
     private static final DiffUtil.ItemCallback<Routine> DIFF_CALLBACK = new DiffUtil.ItemCallback<Routine>() {
@@ -49,11 +51,13 @@ public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.
 
     class TimerGroupHolder extends RecyclerView.ViewHolder {
         private final TextView textViewName;
+        private final ImageView startButton;
         private final ProgressIndicator progressIndicator;
 
         public TimerGroupHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewName);
+            startButton = itemView.findViewById(R.id.startRoutineButton);
             progressIndicator = itemView.findViewById(R.id.indeterminateProgress);
             progressIndicator.setVisibility(View.INVISIBLE);
 
@@ -70,6 +74,15 @@ public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.
                     }
                 }
             });
+
+            startButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    onStartClickListener.onStartClick(getItem(position));
+                }
+            });
+
         }
     }
 
@@ -77,10 +90,17 @@ public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.
         void onItemClick(Routine routine, int position);
     }
 
+    public interface OnStartClickListener {
+        void onStartClick(Routine routine);
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
+    public void setOnStartClickListener(OnStartClickListener listener) {
+        this.onStartClickListener = listener;
+    }
     public void clearProgress(int position) {
         visibleBar.setVisibility(View.INVISIBLE);
         visibleBar = null;
