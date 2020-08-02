@@ -49,8 +49,6 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
         }
 
-        initializeViews();
-
         // Initialise the RecyclerView for timers
         RecyclerView recyclerView = findViewById(R.id.timersRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -92,8 +90,8 @@ public class AddEditRoutineActivity extends AppCompatActivity {
                 timerListAdapter.setTimers(timers);
             }
         });
-        //noinspection unchecked
-        editingTimers.setValue((List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS));
+
+        initializeViews(getIntent());
 
     }
 
@@ -137,11 +135,15 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         return hoursPicker.getValue() * 3600 + minutesPicker.getValue() * 60 + secondsPicker.getValue();
     }
 
-    private void initializeViews() {
-        if (getIntent().hasExtra(EXTRA_ROUTINE)) {
+    /**
+     * Set activity title, delete button visibility, text input prefill, keyboard visibility, and timers
+     * @param intent
+     */
+    private void initializeViews(Intent intent) {
+        if (intent.hasExtra(EXTRA_ROUTINE)) {
             setTitle("Edit Routine");
             showDelete = true;
-            editingRoutine = (Routine) getIntent().getSerializableExtra(EXTRA_ROUTINE);
+            editingRoutine = (Routine) intent.getSerializableExtra(EXTRA_ROUTINE);
             if (editingRoutine == null) {
                 setResult(RESULT_CANCELED);
                 finish();
@@ -154,6 +156,11 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             if (editTextName.requestFocus()) {
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
+        }
+
+        if (intent.hasExtra(EXTRA_TIMERS)) {
+            //noinspection unchecked
+            editingTimers.setValue((List<Timer>) intent.getSerializableExtra(EXTRA_TIMERS));
         }
     }
 
