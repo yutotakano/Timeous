@@ -110,8 +110,11 @@ public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineLi
     public void setOnEditClickListener(OnEditClickListener listener) {
         this.onEditClickListener = listener;
     }
+
     public void clearProgress(int position) {
-        visibleBar.setVisibility(View.INVISIBLE);
+        // check for null because if the activity was launched twice by mistake,
+        // the progress bar would've already been gone on the first exit
+        if (visibleBar != null) visibleBar.setVisibility(View.INVISIBLE);
         visibleBar = null;
     }
 
