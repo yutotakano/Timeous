@@ -48,10 +48,6 @@ public class DataViewModel extends AndroidViewModel {
         return dataRepository.getTimersInRoutine(routineId);
     }
 
-    public void deleteTimersInRoutine(Long routineId) {
-        dataRepository.deleteTimersInRoutine(routineId);
-    }
-
     public void insertTimer(Timer timer, Long timerGroupId) {
         dataRepository.insertTimer(timer, timerGroupId);
     }

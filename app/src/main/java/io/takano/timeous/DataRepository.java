@@ -59,10 +59,6 @@ public class DataRepository {
         return timerDao.getTimersInRoutine(routineId);
     }
 
-    public void deleteTimersInRoutine(Long routineId) {
-        new DeleteTimersInRoutineAsyncTask(timerDao).execute(routineId);
-    }
-
     public void insertTimer(Timer timer, Long routineId) {
         timer.setRoutineId(routineId);
         new InsertTimerAsyncTask(timerDao).execute(timer);
@@ -129,20 +125,6 @@ public class DataRepository {
         @Override
         protected Void doInBackground(Routine... routines) {
             routineDao.delete(routines[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteTimersInRoutineAsyncTask extends AsyncTask<Long, Void, Void> {
-        private final TimerDao timerDao;
-
-        private DeleteTimersInRoutineAsyncTask(TimerDao timerDao) {
-            this.timerDao = timerDao;
-        }
-
-        @Override
-        protected Void doInBackground(Long... routineIds) {
-            timerDao.deleteTimersInRoutine(routineIds[0]);
             return null;
         }
     }
