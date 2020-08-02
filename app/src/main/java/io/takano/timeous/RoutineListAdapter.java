@@ -79,15 +79,22 @@ public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineLi
             });
 
             editButton.setOnClickListener(new View.OnClickListener() {
+                public static final long MIN_INTERVAL = 1000;
+                private long lastClickTime = 0;
+
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    // make sure we don't click something that doesn't exist, like during a
-                    // deletion animation
-                    if (listener != null && position != RecyclerView.NO_POSITION) {
-                        progressIndicator.setVisibility(View.VISIBLE);
-                        visibleBar = progressIndicator;
-                        onEditClickListener.onEditClick(getItem(position), position);
+                    long currentTime = SystemClock.elapsedRealtime();
+                    if (currentTime - lastClickTime > MIN_INTERVAL) {
+                        lastClickTime = currentTime;
+                        int position = getAdapterPosition();
+                        // make sure we don't click something that doesn't exist, like during a
+                        // deletion animation
+                        if (listener != null && position != RecyclerView.NO_POSITION) {
+                            progressIndicator.setVisibility(View.VISIBLE);
+                            visibleBar = progressIndicator;
+                            onEditClickListener.onEditClick(getItem(position), position);
+                        }
                     }
                 }
             });
