@@ -189,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
             return;
         }
-        dataViewModel.deleteTimersInRoutine(routine.getId());
         dataViewModel.deleteRoutine(routine);
         Toast.makeText(this, "Routine and its timers deleted permanently", Toast.LENGTH_SHORT).show();
     }

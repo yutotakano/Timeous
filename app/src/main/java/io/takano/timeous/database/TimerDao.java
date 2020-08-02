@@ -21,9 +21,6 @@ public interface TimerDao {
     @Delete
     void delete(Timer timer);
 
-    @Query("DELETE FROM timers WHERE routine_id=:routineId")
-    void deleteTimersInRoutine(Long routineId);
-
     @Query("SELECT * FROM timers WHERE routine_id=:routineId")
     LiveData<List<Timer>> getTimersInRoutine(Long routineId);
 
