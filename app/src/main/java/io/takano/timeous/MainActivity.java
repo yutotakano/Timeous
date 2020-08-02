@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
+                DividerItemDecoration.VERTICAL));
 
         // and its adapter
         final RoutineListAdapter adapter = new RoutineListAdapter();
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new RoutineListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final Routine routine, final int position) {
-                Intent intent = new Intent(MainActivity.this, ActiveTimerActivity.class);
+                Intent intent = new Intent(MainActivity.this,
+                        ActiveTimerActivity.class);
                 startActivity(intent);
             }
         });
@@ -64,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnEditClickListener(new RoutineListAdapter.OnEditClickListener() {
             @Override
             public void onEditClick(final RoutineWithTimers routine, final int position) {
-                Intent intent = new Intent(MainActivity.this, AddEditRoutineActivity.class);
+                Intent intent = new Intent(MainActivity.this,
+                        AddEditRoutineActivity.class);
                 intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE, routine.routine);
                 intent.putExtra(AddEditRoutineActivity.EXTRA_TIMERS, (Serializable) routine.timers);
                 final ActivityResultLauncher<Intent> intentActivityResultLauncher =
@@ -120,13 +123,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onRoutineAdded(ActivityResult result) {
-        if (result.getData() == null) {
+        Intent intentData = result.getData();
+        if (intentData == null) {
             Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
             return;
         }
-        Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+        Routine routine = (Routine) intentData.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
         @SuppressWarnings("unchecked") final List<Timer> timers = (List<Timer>)
-                result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
+                intentData.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
         if (routine == null || timers == null) {
             Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
             return;
@@ -150,13 +154,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onRoutineEdited(ActivityResult result) {
-        if (result.getData() == null) {
+        Intent intentData = result.getData();
+        if (intentData == null) {
             Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
             return;
         }
-        Routine routine = (Routine) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
+        Routine routine = (Routine) intentData.getSerializableExtra(AddEditRoutineActivity.EXTRA_ROUTINE);
         @SuppressWarnings("unchecked")
-        List<Timer> timers = (List<Timer>) result.getData().getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
+        List<Timer> timers = (List<Timer>) intentData.getSerializableExtra(AddEditRoutineActivity.EXTRA_TIMERS);
         if (routine == null || timers == null) {
             Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show();
             return;
@@ -172,7 +177,8 @@ public class MainActivity extends AppCompatActivity {
                 dataViewModel.updateTimer(timer);
             }
         }
-        Toast.makeText(this, "Updated routine and " + timers.size() + " timers", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Updated routine and " + timers.size() + " timers",
+                Toast.LENGTH_SHORT).show();
     }
 
     private void onRoutineDeleted(ActivityResult result) {
@@ -186,7 +192,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         dataViewModel.deleteRoutine(routine);
-        Toast.makeText(this, "Routine and its timers deleted permanently", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Routine and its timers deleted permanently",
+                Toast.LENGTH_SHORT).show();
     }
 
 }
