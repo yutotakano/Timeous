@@ -166,23 +166,6 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         editingTimers.setValue(currentTimers);
     }
 
-    private void deleteRoutine() {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Delete?")
-                .setMessage("You can not undo this action.")
-                .setNeutralButton("Cancel", null)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent();
-                        intent.putExtra(EXTRA_ROUTINE, editingRoutine);
-                        setResult(RESULT_DELETE, intent);
-                        finish();
-                    }
-                })
-                .show();
-    }
-
     private void saveRoutine() {
         String name = editTextName.getEditableText().toString();
         if (name.trim().isEmpty()) {
@@ -205,6 +188,23 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
         setResult(RESULT_OK, intent);
         finish(); // close activity
+    }
+
+    private void deleteRoutine() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Delete?")
+                .setMessage("You can not undo this action.")
+                .setNeutralButton("Cancel", null)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent();
+                        intent.putExtra(EXTRA_ROUTINE, editingRoutine);
+                        setResult(RESULT_DELETE, intent);
+                        finish();
+                    }
+                })
+                .show();
     }
 
     @Override
