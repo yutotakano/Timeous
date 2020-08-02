@@ -87,7 +87,7 @@ public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineLi
                     if (listener != null && position != RecyclerView.NO_POSITION) {
                         progressIndicator.setVisibility(View.VISIBLE);
                         visibleBar = progressIndicator;
-                        onEditClickListener.onEditClick(getItem(position).routine, position);
+                        onEditClickListener.onEditClick(getItem(position), position);
                     }
                 }
             });
@@ -100,7 +100,7 @@ public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineLi
     }
 
     public interface OnEditClickListener {
-        void onEditClick(Routine routine, int position);
+        void onEditClick(RoutineWithTimers routine, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

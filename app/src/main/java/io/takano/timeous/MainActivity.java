@@ -71,38 +71,30 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.setOnEditClickListener(new RoutineListAdapter.OnEditClickListener() {
             @Override
-            public void onEditClick(final Routine routine, final int position) {
-                final LiveData<List<Timer>> timersObservable = dataViewModel.getTimersInRoutine(routine.getId());
-                timersObservable.observe(MainActivity.this, new Observer<List<Timer>>() {
-                    @Override
-                    public void onChanged(List<Timer> timers) {
-                        Intent intent = new Intent(MainActivity.this, AddEditRoutineActivity.class);
-                        intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE, routine);
-                        intent.putExtra(AddEditRoutineActivity.EXTRA_TIMERS, (Serializable) timers);
-                        final ActivityResultLauncher<Intent> intentActivityResultLauncher =
-                                registerForActivityResult(
-                                        new ActivityResultContracts.StartActivityForResult(),
-                                        new ActivityResultCallback<ActivityResult>() {
-                                            @Override
-                                            public void onActivityResult(ActivityResult result) {
-                                                adapter.clearProgress(position);
-                                                switch (result.getResultCode()) {
-                                                    case RESULT_OK:
-                                                        onRoutineEdited(result);
-                                                        break;
-                                                    case AddEditRoutineActivity.RESULT_DELETE:
-                                                        onRoutineDeleted(result);
-                                                        break;
-                                                    default:
-                                                        break;
-                                                }
-                                            }
-                                        });
-                        intentActivityResultLauncher.launch(intent);
-                        // don't trigger again
-                        timersObservable.removeObserver(this);
-                    }
-                });
+            public void onEditClick(final RoutineWithTimers routine, final int position) {
+                Intent intent = new Intent(MainActivity.this, AddEditRoutineActivity.class);
+                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE, routine.routine);
+                intent.putExtra(AddEditRoutineActivity.EXTRA_TIMERS, (Serializable) routine.timers);
+                final ActivityResultLauncher<Intent> intentActivityResultLauncher =
+                        registerForActivityResult(
+                                new ActivityResultContracts.StartActivityForResult(),
+                                new ActivityResultCallback<ActivityResult>() {
+                                    @Override
+                                    public void onActivityResult(ActivityResult result) {
+                                        adapter.clearProgress(position);
+                                        switch (result.getResultCode()) {
+                                            case RESULT_OK:
+                                                onRoutineEdited(result);
+                                                break;
+                                            case AddEditRoutineActivity.RESULT_DELETE:
+                                                onRoutineDeleted(result);
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                });
+                intentActivityResultLauncher.launch(intent);
             }
         });
 
