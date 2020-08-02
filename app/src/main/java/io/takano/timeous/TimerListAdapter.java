@@ -5,8 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +12,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import io.takano.timeous.timers.Timer;
+import io.takano.timeous.database.Timer;
 
 public class TimerListAdapter extends RecyclerView.Adapter<TimerListAdapter.TimerHolder> {
     private List<Timer> timers = new ArrayList<>();

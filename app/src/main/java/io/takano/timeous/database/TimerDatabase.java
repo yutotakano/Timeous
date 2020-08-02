@@ -1,4 +1,4 @@
-package io.takano.timeous.timers;
+package io.takano.timeous.database;
 
 import android.content.Context;
 import android.os.AsyncTask;

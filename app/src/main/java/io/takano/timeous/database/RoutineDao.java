@@ -1,4 +1,4 @@
-package io.takano.timeous.routines;
+package io.takano.timeous.database;
 
 import java.util.List;
 

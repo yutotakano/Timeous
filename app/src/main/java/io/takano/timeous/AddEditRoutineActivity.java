@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.takano.timeous.routines.Routine;
-import io.takano.timeous.timers.Timer;
+import io.takano.timeous.database.Routine;
+import io.takano.timeous.database.Timer;
 
 import android.content.DialogInterface;
 import android.content.Intent;

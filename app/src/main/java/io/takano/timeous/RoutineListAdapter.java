@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import io.takano.timeous.routines.Routine;
+import io.takano.timeous.database.Routine;
 
 public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.TimerGroupHolder> {
     private OnItemClickListener listener;

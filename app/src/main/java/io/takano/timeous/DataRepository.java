@@ -8,12 +8,12 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import io.takano.timeous.routines.Routine;
-import io.takano.timeous.routines.RoutineDao;
-import io.takano.timeous.routines.RoutineDatabase;
-import io.takano.timeous.timers.Timer;
-import io.takano.timeous.timers.TimerDao;
-import io.takano.timeous.timers.TimerDatabase;
+import io.takano.timeous.database.Routine;
+import io.takano.timeous.database.RoutineDao;
+import io.takano.timeous.database.RoutineDatabase;
+import io.takano.timeous.database.Timer;
+import io.takano.timeous.database.TimerDao;
+import io.takano.timeous.database.TimerDatabase;
 
 /**
  * The role of this class is to provide a layer of abstraction for the database operations.

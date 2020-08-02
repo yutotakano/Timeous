@@ -7,8 +7,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import io.takano.timeous.routines.Routine;
-import io.takano.timeous.timers.Timer;
+import io.takano.timeous.database.Routine;
+import io.takano.timeous.database.Timer;
 
 // A context is needed for the repository and its databases, but if we use Activity or View contexts,
 // they will get destroyed when configuration changes occur (i.e. screen rotation)
