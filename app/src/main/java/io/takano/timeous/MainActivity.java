@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.database.Routine;
+import io.takano.timeous.database.RoutineWithTimers;
 import io.takano.timeous.database.Timer;
 
 import android.content.Intent;
@@ -105,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        dataViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
+        dataViewModel.getAllRoutines().observe(this, new Observer<List<RoutineWithTimers>>() {
             @Override
-            public void onChanged(List<Routine> routines) {
+            public void onChanged(List<RoutineWithTimers> routines) {
                 adapter.submitList(routines);
             }
         });

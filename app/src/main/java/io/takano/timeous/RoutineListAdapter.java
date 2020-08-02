@@ -13,21 +13,22 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.database.Routine;
+import io.takano.timeous.database.RoutineWithTimers;
 
-public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.TimerGroupHolder> {
+public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineListAdapter.TimerGroupHolder> {
     private OnItemClickListener listener;
     private OnEditClickListener onEditClickListener;
     private ProgressIndicator visibleBar;
 
-    private static final DiffUtil.ItemCallback<Routine> DIFF_CALLBACK = new DiffUtil.ItemCallback<Routine>() {
+    private static final DiffUtil.ItemCallback<RoutineWithTimers> DIFF_CALLBACK = new DiffUtil.ItemCallback<RoutineWithTimers>() {
         @Override
-        public boolean areItemsTheSame(@NonNull Routine oldItem, @NonNull Routine newItem) {
-            return oldItem.getId().equals(newItem.getId());
+        public boolean areItemsTheSame(@NonNull RoutineWithTimers oldItem, @NonNull RoutineWithTimers newItem) {
+            return oldItem.routine.getId().equals(newItem.routine.getId());
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Routine oldItem, @NonNull Routine newItem) {
-            return oldItem.getName().equals(newItem.getName());
+        public boolean areContentsTheSame(@NonNull RoutineWithTimers oldItem, @NonNull RoutineWithTimers newItem) {
+            return oldItem.routine.getName().equals(newItem.routine.getName());
         }
     };
 
@@ -45,8 +46,8 @@ public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull TimerGroupHolder holder, int position) {
-        Routine currentRoutine = getItem(position);
-        holder.textViewName.setText(currentRoutine.getName());
+        RoutineWithTimers currentRoutine = getItem(position);
+        holder.textViewName.setText(currentRoutine.routine.getName());
     }
 
     class TimerGroupHolder extends RecyclerView.ViewHolder {
@@ -65,7 +66,7 @@ public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    listener.onItemClick(getItem(position), position);
+                    listener.onItemClick(getItem(position).routine, position);
                 }
             });
 
@@ -78,7 +79,7 @@ public class RoutineListAdapter extends ListAdapter<Routine, RoutineListAdapter.
                     if (listener != null && position != RecyclerView.NO_POSITION) {
                         progressIndicator.setVisibility(View.VISIBLE);
                         visibleBar = progressIndicator;
-                        onEditClickListener.onEditClick(getItem(position), position);
+                        onEditClickListener.onEditClick(getItem(position).routine, position);
                     }
                 }
             });

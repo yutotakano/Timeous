@@ -8,12 +8,12 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import io.takano.timeous.database.MainDatabase;
 import io.takano.timeous.database.Routine;
 import io.takano.timeous.database.RoutineDao;
-import io.takano.timeous.database.RoutineDatabase;
+import io.takano.timeous.database.RoutineWithTimers;
 import io.takano.timeous.database.Timer;
 import io.takano.timeous.database.TimerDao;
-import io.takano.timeous.database.TimerDatabase;
 
 /**
  * The role of this class is to provide a layer of abstraction for the database operations.
@@ -25,16 +25,14 @@ public class DataRepository {
     private final TimerDao timerDao;
     private final RoutineDao routineDao;
     private LiveData<List<Timer>> allTimers;
-    private LiveData<List<Routine>> allRoutines;
+    private LiveData<List<RoutineWithTimers>> allRoutines;
     private MutableLiveData<Long> insertRoutineResultId = new MutableLiveData<>();
 
     public DataRepository(Application application) {
-        RoutineDatabase routineDatabase = RoutineDatabase.getDatabase(application);
-        routineDao = routineDatabase.timerGroupDao();
+        MainDatabase mainDatabase = MainDatabase.getInstance(application);
+        routineDao = mainDatabase.routineDao();
+        timerDao = mainDatabase.timerDao();
         allRoutines = routineDao.getAllRoutines();
-
-        TimerDatabase timerDatabase = TimerDatabase.getInstance(application);
-        timerDao = timerDatabase.timerDao();
         allTimers = timerDao.getAllTimers();
     }
 
@@ -53,7 +51,7 @@ public class DataRepository {
         new DeleteRoutineAsyncTask(routineDao).execute(routine);
     }
 
-    public LiveData<List<Routine>> getAllRoutines() {
+    public LiveData<List<RoutineWithTimers>> getAllRoutines() {
         return allRoutines;
     }
 

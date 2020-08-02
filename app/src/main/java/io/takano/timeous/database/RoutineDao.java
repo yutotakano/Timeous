@@ -7,6 +7,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 @Dao
@@ -21,7 +22,8 @@ public interface RoutineDao {
     @Delete
     void delete(Routine routine);
 
+    @Transaction
     @Query("SELECT * FROM routines")
-    LiveData<List<Routine>> getAllRoutines();
+    LiveData<List<RoutineWithTimers>> getAllRoutines();
 
 }

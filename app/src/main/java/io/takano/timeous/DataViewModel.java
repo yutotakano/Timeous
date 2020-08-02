@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import io.takano.timeous.database.Routine;
+import io.takano.timeous.database.RoutineWithTimers;
 import io.takano.timeous.database.Timer;
 
 // A context is needed for the repository and its databases, but if we use Activity or View contexts,
@@ -16,7 +17,7 @@ import io.takano.timeous.database.Timer;
 public class DataViewModel extends AndroidViewModel {
 
     private final DataRepository dataRepository;
-    private final LiveData<List<Routine>> allRoutines;
+    private final LiveData<List<RoutineWithTimers>> allRoutines;
     private final LiveData<List<Timer>> allTimers;
 
     public DataViewModel(@NonNull Application application) {
@@ -39,7 +40,7 @@ public class DataViewModel extends AndroidViewModel {
         dataRepository.deleteRoutine(routine);
     }
 
-    public LiveData<List<Routine>> getAllRoutines() {
+    public LiveData<List<RoutineWithTimers>> getAllRoutines() {
         return allRoutines;
     }
 

@@ -5,10 +5,22 @@ import java.io.Serializable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "timers", indices = {@Index(value = "id", unique = true)})
+@Entity(
+        tableName = "timers",
+        indices = {
+                @Index(value = "id", unique = true)
+        },
+        foreignKeys = {
+                @ForeignKey(entity = Routine.class,
+                        parentColumns = "id",
+                        childColumns = "routine_id",
+                        onDelete = ForeignKey.CASCADE)
+        }
+)
 public class Timer implements Serializable {
 
     @SuppressWarnings("NotNullFieldNotInitialized")
