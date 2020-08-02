@@ -1,5 +1,6 @@
 package io.takano.timeous;
 
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,10 +64,17 @@ public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineLi
             progressIndicator.setVisibility(View.INVISIBLE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
+                public static final long MIN_INTERVAL = 1000;
+                private long lastClickTime = 0;
+
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    listener.onItemClick(getItem(position).routine, position);
+                    long currentTime = SystemClock.elapsedRealtime();
+                    if (currentTime - lastClickTime > MIN_INTERVAL) {
+                        lastClickTime = currentTime;
+                        int position = getAdapterPosition();
+                        listener.onItemClick(getItem(position).routine, position);
+                    }
                 }
             });
 
