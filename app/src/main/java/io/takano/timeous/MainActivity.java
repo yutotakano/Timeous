@@ -42,25 +42,17 @@ public class MainActivity extends AppCompatActivity {
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
                 .get(DataViewModel.class);
 
+        // initialise basic recyclerView
         RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
+        // and its adapter
         final RoutineListAdapter adapter = new RoutineListAdapter();
         recyclerView.setAdapter(adapter);
 
-        final ActivityResultLauncher<Intent> addIntentActivityResultLauncher =
-                registerForActivityResult(
-                        new ActivityResultContracts.StartActivityForResult(),
-                        new ActivityResultCallback<ActivityResult>() {
-                            @Override
-                            public void onActivityResult(ActivityResult result) {
-                                if (result.getResultCode() == RESULT_OK)
-                                    onRoutineAdded(result);
-                            }
-                        });
-
+        // register the item onclick and edit onclick before setting data
         adapter.setOnItemClickListener(new RoutineListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final Routine routine, final int position) {
@@ -98,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // set recyclerview adapter data through a LiveData Observer
         dataViewModel.getAllRoutines().observe(this, new Observer<List<RoutineWithTimers>>() {
             @Override
             public void onChanged(List<RoutineWithTimers> routines) {
@@ -105,11 +98,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // register FAB onclick
         FloatingActionButton addButton = findViewById(R.id.mainAppBarAdd);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddEditRoutineActivity.class);
+                final ActivityResultLauncher<Intent> addIntentActivityResultLauncher =
+                        registerForActivityResult(
+                                new ActivityResultContracts.StartActivityForResult(),
+                                new ActivityResultCallback<ActivityResult>() {
+                                    @Override
+                                    public void onActivityResult(ActivityResult result) {
+                                        if (result.getResultCode() == RESULT_OK)
+                                            onRoutineAdded(result);
+                                    }
+                                });
                 addIntentActivityResultLauncher.launch(intent);
             }
         });
