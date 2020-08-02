@@ -12,7 +12,8 @@ import androidx.room.PrimaryKey;
 @Entity(
         tableName = "timers",
         indices = {
-                @Index(value = "id", unique = true)
+                @Index(value = "id", unique = true),
+                @Index(value = "routine_id")
         },
         foreignKeys = {
                 @ForeignKey(entity = Routine.class,
