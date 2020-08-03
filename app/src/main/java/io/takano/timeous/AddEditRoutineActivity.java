@@ -32,10 +32,11 @@ public class AddEditRoutineActivity extends AppCompatActivity {
     public static final String EXTRA_TIMERS = "io.takano.timeous.EXTRA_TIMERS";
     public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 
-    public static Boolean showDelete = false;
     private TextInputEditText editTextName;
     private Routine editingRoutine;
     private final MutableLiveData<List<Timer>> editingTimers = new MutableLiveData<>();
+
+    private Boolean showDelete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
