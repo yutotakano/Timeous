@@ -256,10 +256,10 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             for (int i = 0; i < timers.size(); i++) {
                 Timer originalTimer = timers.get(i);
                 Timer newTimer = newTimers.get(i);
-                if (originalTimer.getId() != newTimer.getId() ||
-                        originalTimer.getName() != newTimer.getName() ||
-                        originalTimer.getOrder() != newTimer.getOrder() ||
-                        originalTimer.getSeconds() != newTimer.getSeconds()) {
+                if (!originalTimer.getId().equals(newTimer.getId()) ||
+                        !originalTimer.getName().equals(newTimer.getName()) ||
+                        !originalTimer.getOrder().equals(newTimer.getOrder()) ||
+                        !originalTimer.getSeconds().equals(newTimer.getSeconds())) {
                     changed = true;
                     break;
                 }
