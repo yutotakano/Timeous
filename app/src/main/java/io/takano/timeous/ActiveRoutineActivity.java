@@ -46,11 +46,11 @@ public class ActiveRoutineActivity extends AppCompatActivity {
 
         routine = (Routine) getIntent().getSerializableExtra(EXTRA_ROUTINE);
         timers = (List<Timer>) getIntent().getSerializableExtra(EXTRA_TIMERS);
+        setTitle(routine.getName());
 
         timerName = findViewById(R.id.timerName);
         remainingTimeText = findViewById(R.id.timerRemainingTime);
         remainingTimeMilliText = findViewById(R.id.timerRemainingTimeMilli);
-
         resumePauseFAB = findViewById(R.id.resumePauseButton);
 
         resumePauseFAB.setOnClickListener(new View.OnClickListener() {
