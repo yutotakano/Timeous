@@ -1,16 +1,20 @@
 package io.takano.timeous;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -134,5 +138,34 @@ public class ActiveRoutineActivity extends AppCompatActivity {
         int millis = (int) (timerRemainingTime % 1000);
         remainingTimeText.setText(String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds));
         remainingTimeMilliText.setText(String.format(Locale.getDefault(), ".%03d", millis));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (timerRunning) {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Are you sure?")
+                    .setMessage("There is a timer running.")
+                    .setNegativeButton("No, Stay", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ActiveRoutineActivity.super.onBackPressed();
+                        }
+                    })
+                    .show();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
