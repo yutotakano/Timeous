@@ -1,26 +1,22 @@
 package io.takano.timeous;
 
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.database.Routine;
-import io.takano.timeous.database.RoutineWithTimers;
 import io.takano.timeous.database.Timer;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class ActiveRoutineActivity extends AppCompatActivity {
 

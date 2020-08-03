@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import io.takano.timeous.database.Routine;
 import io.takano.timeous.database.RoutineWithTimers;
 
 public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineListAdapter.TimerGroupHolder> {

@@ -1,15 +1,5 @@
 package io.takano.timeous;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import io.takano.timeous.database.Routine;
-import io.takano.timeous.database.Timer;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +16,16 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import io.takano.timeous.database.Routine;
+import io.takano.timeous.database.Timer;
 
 public class AddEditRoutineActivity extends AppCompatActivity {
     public static final String EXTRA_ROUTINE = "io.takano.timeous.EXTRA_ROUTINE";
@@ -137,6 +137,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
     /**
      * Set activity title, delete button visibility, text input prefill, keyboard visibility, and timers
+     *
      * @param intent
      */
     private void initializeViews(Intent intent) {

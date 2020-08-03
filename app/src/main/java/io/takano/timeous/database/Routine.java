@@ -14,7 +14,7 @@ public class Routine implements Serializable {
     @SuppressWarnings("NotNullFieldNotInitialized")
     @NonNull
     @PrimaryKey(autoGenerate = true)
-    protected  Long id;
+    protected Long id;
 
     private String name;
 

@@ -1,5 +1,15 @@
 package io.takano.timeous;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.Serializable;
+import java.util.List;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -14,16 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.takano.timeous.database.Routine;
 import io.takano.timeous.database.RoutineWithTimers;
 import io.takano.timeous.database.Timer;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.io.Serializable;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
