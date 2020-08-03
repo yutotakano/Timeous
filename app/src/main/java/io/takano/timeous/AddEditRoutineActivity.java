@@ -33,7 +33,8 @@ public class AddEditRoutineActivity extends AppCompatActivity {
     public static final int RESULT_DELETE = RESULT_FIRST_USER + 1;
 
     private TextInputEditText editTextName;
-    private Routine editingRoutine;
+    private Routine routine;
+    private List<Timer> timers;
     private final MutableLiveData<List<Timer>> editingTimers = new MutableLiveData<>();
 
     private Boolean showDelete = false;
@@ -145,16 +146,16 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         if (intent.hasExtra(EXTRA_ROUTINE)) {
             setTitle("Edit Routine");
             showDelete = true;
-            editingRoutine = (Routine) intent.getSerializableExtra(EXTRA_ROUTINE);
-            if (editingRoutine == null) {
+            routine = (Routine) intent.getSerializableExtra(EXTRA_ROUTINE);
+            if (routine == null) {
                 setResult(RESULT_CANCELED);
                 finish();
             }
-            editTextName.setText(editingRoutine.getName());
+            editTextName.setText(routine.getName());
         } else {
             setTitle("Create new routine");
             showDelete = false;
-            editingRoutine = new Routine(null);
+            routine = new Routine(null);
             if (editTextName.requestFocus()) {
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
@@ -162,7 +163,8 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
         if (intent.hasExtra(EXTRA_TIMERS)) {
             //noinspection unchecked
-            editingTimers.setValue((List<Timer>) intent.getSerializableExtra(EXTRA_TIMERS));
+            timers = (List<Timer>) intent.getSerializableExtra(EXTRA_TIMERS);
+            editingTimers.setValue(timers);
         }
     }
 
@@ -189,10 +191,10 @@ public class AddEditRoutineActivity extends AppCompatActivity {
                     .show();
             return;
         }
-        editingRoutine.setName(name);
+        routine.setName(name);
 
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_ROUTINE, editingRoutine);
+        intent.putExtra(EXTRA_ROUTINE, routine);
         intent.putExtra(EXTRA_TIMERS, (Serializable) editingTimers.getValue());
 
         setResult(RESULT_OK, intent);
@@ -208,7 +210,7 @@ public class AddEditRoutineActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent();
-                        intent.putExtra(EXTRA_ROUTINE, editingRoutine);
+                        intent.putExtra(EXTRA_ROUTINE, routine);
                         setResult(RESULT_DELETE, intent);
                         finish();
                     }
@@ -244,18 +246,39 @@ public class AddEditRoutineActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Are you sure?")
-                .setMessage("Any active changes will be lost.")
-                .setNegativeButton("No, Stay", null)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        AddEditRoutineActivity.super.onBackPressed();
-                    }
-                })
-                .show();
+        String name = editTextName.getEditableText().toString();
+        List<Timer> newTimers = editingTimers.getValue();
+        Boolean changed = !routine.getName().equals(name);
+        if (!changed) {
+            changed = timers.size() != newTimers.size();
+        }
+        if (!changed) {
+            for (int i = 0; i < timers.size(); i++) {
+                Timer originalTimer = timers.get(i);
+                Timer newTimer = newTimers.get(i);
+                if (originalTimer.getId() != newTimer.getId() ||
+                        originalTimer.getName() != newTimer.getName() ||
+                        originalTimer.getOrder() != newTimer.getOrder() ||
+                        originalTimer.getSeconds() != newTimer.getSeconds()) {
+                    changed = true;
+                    break;
+                }
+            }
+        }
+        if (changed) {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Are you sure?")
+                    .setMessage("Any active changes will be lost.")
+                    .setNegativeButton("No, Stay", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            AddEditRoutineActivity.super.onBackPressed();
+                        }
+                    })
+                    .show();
+        } else {
+            super.onBackPressed();
+        }
     }
-
-
 }
