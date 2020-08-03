@@ -73,7 +73,7 @@ public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineLi
                     if (currentTime - lastClickTime > MIN_INTERVAL) {
                         lastClickTime = currentTime;
                         int position = getAdapterPosition();
-                        listener.onItemClick(getItem(position).routine, position);
+                        listener.onItemClick(getItem(position), position);
                     }
                 }
             });
@@ -103,7 +103,7 @@ public class RoutineListAdapter extends ListAdapter<RoutineWithTimers, RoutineLi
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Routine routine, int position);
+        void onItemClick(RoutineWithTimers routine, int position);
     }
 
     public interface OnEditClickListener {

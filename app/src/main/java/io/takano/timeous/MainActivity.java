@@ -56,9 +56,11 @@ public class MainActivity extends AppCompatActivity {
         // register the item onclick and edit onclick before setting data
         adapter.setOnItemClickListener(new RoutineListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(final Routine routine, final int position) {
+            public void onItemClick(final RoutineWithTimers routine, final int position) {
                 Intent intent = new Intent(MainActivity.this,
-                        ActiveTimerActivity.class);
+                        ActiveRoutineActivity.class);
+                intent.putExtra(ActiveRoutineActivity.EXTRA_ROUTINE, routine.routine);
+                intent.putExtra(ActiveRoutineActivity.EXTRA_TIMERS, (Serializable) routine.timers);
                 startActivity(intent);
             }
         });
